@@ -66,3 +66,18 @@ section {
   width: 100%;
 }
 
+/* Categories Section CSS */
+.carousel{
+  margin: 50px 0;
+}
+.carousel-card{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+.carousel-card img{
+  width: 100px;
+  height: 100px;
+}
