@@ -56,3 +56,13 @@ section {
 .postad-btn:hover {
   background-color: #009951;
 }
+
+/* Hero Section CSS */
+.hero-img{
+  display: flex;
+  justify-content: center;
+}
+.hero-img img{
+  width: 100%;
+}
+
