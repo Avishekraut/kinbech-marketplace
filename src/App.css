@@ -1,3 +1,8 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
 section {
   margin: 0 128px;
 }
@@ -32,7 +37,7 @@ section {
   font-size: 18px;
   cursor: pointer;
 }
-.nav-links{
+.nav-links {
   gap: 35px;
 }
 .postad-btn {
@@ -58,26 +63,69 @@ section {
 }
 
 /* Hero Section CSS */
-.hero-img{
+.hero-img {
   display: flex;
   justify-content: center;
 }
-.hero-img img{
+.hero-img img {
   width: 100%;
 }
 
 /* Categories Section CSS */
-.carousel{
+.carousel {
   margin: 50px 0;
 }
-.carousel-card{
+.carousel-card {
   display: flex;
   justify-content: center;
   flex-direction: column;
   text-align: center;
   align-items: center;
 }
-.carousel-card img{
+.carousel-card img {
   width: 100px;
   height: 100px;
+}
+
+/* Title CSS */
+.title {
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  margin: 30px 0;
+}
+
+/* Featured Ads section */
+.ProductCard-conatiner {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card img {
+  width: 300px;
+  height: 300px;
+}
+
+.product-card-title {
+  font-size: 18px;
+  font-weight: 400;
+  margin-top: 16px;
+
+}
+.product-card-price {
+  font-weight: 700;
+  font-size: 16px;
+  margin: 8px 0;
+
+}
+.product-card-location{
+  font-weight: 400;
+  font-size: 16px;
 }
