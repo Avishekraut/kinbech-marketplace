@@ -6,11 +6,12 @@ import Categories from './components/Categories';
 import FeaturedDisProducts from './components/FeaturedDisProducts';
 import Title from './components/Title';
 import LatestUploads from './components/LatestUploads';
+import Footer from './components/Footer';
 
 const App = () => {
   return (
-    <section>
     <div>
+    <section>
       <Nav />
       <Hero />
       <Categories />
@@ -18,8 +19,9 @@ const App = () => {
       <FeaturedDisProducts />
       <Title content="Latest Uploads"/>
       <LatestUploads />
-    </div>
     </section>
+      <Footer />
+    </div>
   );
 }
 
