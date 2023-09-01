@@ -3,6 +3,8 @@ import Nav from './components/Nav';
 import './App.css';
 import Hero from './components/Hero';
 import Categories from './components/Categories';
+import FeaturedDisProducts from './components/FeaturedDisProducts';
+import Title from './components/Title';
 
 const App = () => {
   return (
@@ -11,6 +13,8 @@ const App = () => {
       <Nav />
       <Hero />
       <Categories />
+      <Title content="Featured Ads"/>
+      <FeaturedDisProducts />
     </div>
     </section>
   );
