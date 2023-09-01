@@ -5,6 +5,7 @@ import Hero from './components/Hero';
 import Categories from './components/Categories';
 import FeaturedDisProducts from './components/FeaturedDisProducts';
 import Title from './components/Title';
+import LatestUploads from './components/LatestUploads';
 
 const App = () => {
   return (
@@ -15,6 +16,8 @@ const App = () => {
       <Categories />
       <Title content="Featured Ads"/>
       <FeaturedDisProducts />
+      <Title content="Latest Uploads"/>
+      <LatestUploads />
     </div>
     </section>
   );
