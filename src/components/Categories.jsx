@@ -7,6 +7,7 @@ import LaptopIcon from  "../images/laptop-icon.png"
 import BikeIcon from  "../images/motorcycle-icon.png"
 import GamingIcon from "../images/gaming-icon.png"
 import HomeApplianceIcon from "../images/home-appliance-icon.png"
+import Title from "./Title";
 
 const Categories = () => {
   const responsive = {
@@ -27,6 +28,8 @@ const Categories = () => {
     },
   };
   return (
+    <>
+    <Title content = "Browse By Category"/>
     <div className="carousel">
       <Carousel responsive={responsive}>
         <div className="carousel-card">
@@ -63,6 +66,7 @@ const Categories = () => {
         </div>
       </Carousel>
     </div>
+    </>
   );
 };
 
