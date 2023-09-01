@@ -12,6 +12,3 @@ const FeaturedDisplay = (props) => {
 };
 
 export default FeaturedDisplay;
-{/* <img src={require(`../images/${props.value.image}`)} alt="product"></img>
-          <h2 className="product-details-title">{props.value.name}</h2>
-          <h2 className="product-details-price">{`$ ${props.value.price}`}</h2> */}
