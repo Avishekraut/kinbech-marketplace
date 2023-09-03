@@ -1,6 +1,6 @@
 import React from "react";
 
-const FeaturedDisplay = (props) => {
+const ProductCardsDisplay = (props) => {
   return (
       <div className="product-card">
           <img src={require(`../images/products/${props.value.image}`)} alt="product"></img>
@@ -11,4 +11,4 @@ const FeaturedDisplay = (props) => {
   );
 };
 
-export default FeaturedDisplay;
+export default ProductCardsDisplay;
