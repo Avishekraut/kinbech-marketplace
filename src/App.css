@@ -168,14 +168,18 @@ section {
   margin-top: 60px;
   padding: 60px 128px;
   background: #ebeeef;
-  gap: 360px;
+  gap: 200px;
 }
 .links{
   display: flex;
-  gap: 120px;
+  gap: 94px;
 }
 .contact{
   padding: 8px 0;
+}
+.contact-text{
+  font-size: 18px;
+  font-weight: 600;
 }
 .company{
   padding: 8px 0;
@@ -184,4 +188,19 @@ section {
 .social{
   margin: 8px 0;
   margin-right: 14px;
+}
+.downloadApp-section{
+  display: flex;
+  flex-direction: column;
+}
+.store-conatiner{
+  display: flex;
+  gap: 4px;
+  margin: 8px 0;
+}
+.storeIcon{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 2px;
 }
