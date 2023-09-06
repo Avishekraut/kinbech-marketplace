@@ -9,8 +9,8 @@ const App = () => {
     <div>
     <section>
       {/* <Landing/> */}
-      {/* <Signup /> */}
-      <Login />
+      <Signup />
+      {/* <Login /> */}
     </section>
       <Footer />
     </div>
