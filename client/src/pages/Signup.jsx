@@ -40,10 +40,6 @@ const Signup = () => {
             <button className="py-2 rounded bg-[#14ae5c] text-white text-lg font-medium hover:bg-[#009951] active:scale-[.98] active:duration-75 transition-all ease-in-out ">
               Create Account
             </button>
-            <button className="flex items-center justify-center border-2 gap-2 py-2 rounded text-lg font-xl hover:bg-slate-200 active:scale-[.98] active:duration-75 transition-all ease-in-out">
-              <FcGoogle size={20} />
-              Sign up with Google
-            </button>
           </div>
           <p className="mt-4 text-center hover:text-slate-600 cursor-pointer">
             Already have account? Log In
