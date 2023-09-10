@@ -203,6 +203,9 @@ section {
   gap: 8px;
   margin-top: 2px;
 }
+button:hover {
+  background-color: #009951 !important;
+}
 
 /* Responsive for mobile devices */
 @media screen and (max-width: 600px) {
