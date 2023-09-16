@@ -3,7 +3,17 @@ import Nav from "../components/Nav";
 import { Link } from "react-router-dom";
 import { Button, Form, Input } from "antd";
 
+const rules = [
+  {
+    required: true,
+    message: "required",
+  },
+];
+
 const Login = () => {
+  const onFinish = (values) => {
+    console.log("Success", values);
+  };
   return (
     <>
       <Nav />
@@ -11,14 +21,20 @@ const Login = () => {
         <div className="w-[400px] border border-[#e0e3e4] rounded-sm px-7 py-10">
           <h1 className="text-3xl font-medium">Welcome back</h1>
           <p className="font-medium text-base my-3">Enter your details below</p>
-          <Form layout="vertical">
-            <Form.Item label="Email" name="email" className="font-semibold">
+          <Form layout="vertical" onFinish={onFinish}>
+            <Form.Item
+              label="Email"
+              name="email"
+              className="font-semibold"
+              rules={rules}
+            >
               <Input placeholder="Email" className="border rounded-sm py-2" />
             </Form.Item>
             <Form.Item
               label="Password"
               name="password"
               className="font-semibold"
+              rules={rules}
             >
               <Input
                 type="password"
@@ -30,7 +46,7 @@ const Login = () => {
               type="primary"
               htmlType="submit"
               block
-              className="h-9 rounded bg-[#14ae5c] text-white text-base font-medium active:scale-[.98] active:duration-75 transition-all ease-in-out "
+              className="mt-2 h-9 rounded bg-[#14ae5c] text-white text-base font-medium active:scale-[.98] active:duration-75 transition-all ease-in-out "
             >
               Login
             </Button>
