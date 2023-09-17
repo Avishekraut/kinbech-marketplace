@@ -52,7 +52,7 @@ router.post("/login", async (req, res) => {
       throw new Error("Invalid password");
     }
     // create and assign token
-    const token = jwt.sign({ userId: user._id }, process.env.jwt_secret);
+    const token = jwt.sign({ userId: user._id }, process.env.jwt_secret, { expiresIn: "1d"});
     res.cookie("token", token, {
       expires: new Date(Date.now() + 86400000),
     });
