@@ -1,7 +1,8 @@
 import React from "react";
 import Nav from "../components/Nav";
 import { Link } from "react-router-dom";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
+import { RegisterUser } from "../apicalls/users";
 
 const rules = [
   {
@@ -11,8 +12,17 @@ const rules = [
 ];
 
 const Signup = () => {
-  const onFinish = (values) => {
-    console.log("Success", values);
+  const onFinish = async (values) => {
+    try {
+      const response = await RegisterUser(values);
+      if (response.success){
+        message.success(response.message);
+        } else {
+          throw new Error(response.message);
+      }
+    } catch (error) {
+      message.error(error.message);
+    }
   };
   return (
     <>
