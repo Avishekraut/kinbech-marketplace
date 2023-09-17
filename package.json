@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "antd": "^5.9.0",
+    "axios": "^1.5.0",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.40.0",
     "dotenv": "^16.3.1",
