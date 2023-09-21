@@ -3,6 +3,7 @@ const { JsonWebTokenError } = require("jsonwebtoken");
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const authMiddleware = require("../middlewares/authMiddleware");
 
 //new user registration
 router.post("/register", async (req, res) => {
@@ -52,7 +53,9 @@ router.post("/login", async (req, res) => {
       throw new Error("Invalid password");
     }
     // create and assign token
-    const token = jwt.sign({ userId: user._id }, process.env.jwt_secret, { expiresIn: "1d"});
+    const token = jwt.sign({ userId: user._id }, process.env.jwt_secret, {
+      expiresIn: "1d",
+    });
     res.cookie("token", token, {
       expires: new Date(Date.now() + 86400000),
     });
@@ -60,7 +63,25 @@ router.post("/login", async (req, res) => {
     res.send({
       success: true,
       message: "User logged in successfully",
-      data: token
+      data: token,
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+//get current user
+
+router.get("/get-current-user", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.body.userId);
+    res.send({
+      success: true,
+      message: "User fetched successfully",
+      data: user,
     });
   } catch (error) {
     res.send({
