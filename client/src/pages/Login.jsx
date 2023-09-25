@@ -3,6 +3,8 @@ import Nav from "../components/Nav";
 import { Link } from "react-router-dom";
 import { Button, Form, Input, message} from "antd";
 import { LoginUser } from "../apicalls/users";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const rules = [
   {
@@ -12,12 +14,14 @@ const rules = [
 ];
 
 const Login = () => {
+  const navigate = useNavigate();
   const onFinish = async (values) => {
     try {
       const response = await LoginUser(values);
       if (response.success) {
         message.success(response.message);
         localStorage.setItem("token", response.data);
+        window.location.href = "/";
       } else {
         throw new Error(response.message);
       }
@@ -25,6 +29,13 @@ const Login = () => {
       message.error(error.message);
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/")
+    }
+  }, []);
+
   return (
     <>
       <Nav />

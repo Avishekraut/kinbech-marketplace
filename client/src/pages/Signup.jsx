@@ -3,6 +3,8 @@ import Nav from "../components/Nav";
 import { Link } from "react-router-dom";
 import { Button, Form, Input, message } from "antd";
 import { RegisterUser } from "../apicalls/users";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const rules = [
   {
@@ -12,6 +14,7 @@ const rules = [
 ];
 
 const Signup = () => {
+  const navigate = useNavigate();
   const onFinish = async (values) => {
     try {
       const response = await RegisterUser(values);
@@ -24,6 +27,13 @@ const Signup = () => {
       message.error(error.message);
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/")
+    }
+  }, []);
+
   return (
     <>
       <Nav />
