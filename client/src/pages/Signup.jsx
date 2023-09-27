@@ -1,5 +1,4 @@
 import React from "react";
-import Nav from "../components/Nav";
 import { Link } from "react-router-dom";
 import { Button, Form, Input, message } from "antd";
 import { RegisterUser } from "../apicalls/users";
@@ -36,7 +35,6 @@ const Signup = () => {
 
   return (
     <>
-      <Nav />
       <div className="flex justify-center my-12">
         <div className="w-[400px] border border-[#e0e3e4] rounded-sm px-7 py-10">
           <h1 className="text-3xl font-medium">Create an account</h1>
