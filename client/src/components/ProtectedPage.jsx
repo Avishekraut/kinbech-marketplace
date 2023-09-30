@@ -3,10 +3,12 @@ import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { GetCurrentUser } from "../apicalls/users";
-import { AiOutlineMenu } from "react-icons/ai";
+// import { AiOutlineMenu } from "react-icons/ai";
 import { BiUser } from "react-icons/bi";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
+import { useDispatch } from "react-redux";
+import { setLoader } from "../redux/loadersSlice";
 
 //UserProfileButton component 
 const UserProfileButton = ({ user }) => {
@@ -53,9 +55,12 @@ const UserProfileButton = ({ user }) => {
 const ProtectedPage = ({ children }) => {
   const [user, setUser] = React.useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const validateToken = async () => {
     try {
+      dispatch(setLoader(true));
       const response = await GetCurrentUser();
+      dispatch(setLoader(false))
       if (response.success) {
         setUser(response.data);
       } else {
@@ -63,6 +68,7 @@ const ProtectedPage = ({ children }) => {
         message.error(response.message);
       }
     } catch (error) {
+      dispatch(setLoader(false))
       navigate("/Login");
       message.error(error.message);
     }
