@@ -4,6 +4,8 @@ import { Button, Form, Input, message } from "antd";
 import { RegisterUser } from "../apicalls/users";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLoader } from "../redux/loadersSlice";
 
 const rules = [
   {
@@ -14,22 +16,28 @@ const rules = [
 
 const Signup = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const onFinish = async (values) => {
     try {
+      dispatch(setLoader(true));
       const response = await RegisterUser(values);
-      if (response.success){
+      dispatch(setLoader(false));
+      if (response.success) {
         message.success(response.message);
-        } else {
-          throw new Error(response.message);
+        navigate("/login");
+      } else {
+        throw new Error(response.message);
       }
     } catch (error) {
+      dispatch(setLoader(false));
       message.error(error.message);
     }
   };
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      navigate("/")
+      navigate("/");
     }
   }, []);
 
