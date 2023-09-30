@@ -79,7 +79,7 @@ const ProtectedPage = ({ children }) => {
     user && (
       <div>
         {/* Header */}
-        <div className="flex justify-between items-center p-2 my-3">
+        <div className="flex justify-between items-center py-2 my-3">
           <h1 className="font-bold text-2xl">KinBech</h1>
           <UserProfileButton user={user} />
         </div>
