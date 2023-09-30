@@ -5,10 +5,14 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { Route, Routes } from "react-router-dom";
 import ProtectedPage from "./components/ProtectedPage";
+import Spinner from "./components/Spinner";
+import { useSelector } from "react-redux";
 
 const App = () => {
+  const { loading } = useSelector((state) => state.loaders);
   return (
     <div>
+      {loading && <Spinner />}
       <section>
         <Routes>
           <Route
