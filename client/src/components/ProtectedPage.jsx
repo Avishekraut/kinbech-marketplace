@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { GetCurrentUser } from "../apicalls/users";
 // import { AiOutlineMenu } from "react-icons/ai";
 import { BiUser } from "react-icons/bi";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../redux/loadersSlice";
+import { SetUser } from "../redux/usersSlice";
 
-//UserProfileButton component 
+//UserProfileButton component
 const UserProfileButton = ({ user }) => {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -42,7 +42,7 @@ const UserProfileButton = ({ user }) => {
               onClick={handleLogout}
             >
               Logout
-              <TbLogout size={18}/>
+              <TbLogout size={18} />
             </li>
             {/* Add additional dropdown items here */}
           </ul>
@@ -53,22 +53,22 @@ const UserProfileButton = ({ user }) => {
 };
 
 const ProtectedPage = ({ children }) => {
-  const [user, setUser] = React.useState(null);
+  const { user } = useSelector((state) => state.users);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const validateToken = async () => {
     try {
       dispatch(setLoader(true));
       const response = await GetCurrentUser();
-      dispatch(setLoader(false))
+      dispatch(setLoader(false));
       if (response.success) {
-        setUser(response.data);
+        dispatch(SetUser(response.data));
       } else {
         navigate("/Login");
         message.error(response.message);
       }
     } catch (error) {
-      dispatch(setLoader(false))
+      dispatch(setLoader(false));
       navigate("/Login");
       message.error(error.message);
     }
