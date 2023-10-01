@@ -9,6 +9,7 @@ import { TbLogout } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../redux/loadersSlice";
 import { SetUser } from "../redux/usersSlice";
+import { Button } from "antd";
 
 //UserProfileButton component
 const UserProfileButton = ({ user }) => {
@@ -87,7 +88,16 @@ const ProtectedPage = ({ children }) => {
         {/* Header */}
         <div className="flex justify-between items-center py-2 my-3">
           <h1 className="font-bold text-2xl">KinBech</h1>
-          <UserProfileButton user={user} />
+          <div className="flex items-center">
+            <Button
+              type="primary"
+              onClick={() => navigate("/SellerDashboard")}
+              className="flex justify-center items-center px-6 py-4 mx-2 rounded bg-[#14ae5c] text-white text-base font-medium active:scale-[.98] active:duration-75 transition-all ease-in-out"
+            >
+              Post Ad
+            </Button>
+            <UserProfileButton user={user} />
+          </div>
         </div>
         <div>{children}</div>
       </div>
