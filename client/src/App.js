@@ -7,6 +7,8 @@ import { Route, Routes } from "react-router-dom";
 import ProtectedPage from "./components/ProtectedPage";
 import Spinner from "./components/Spinner";
 import { useSelector } from "react-redux";
+import SellerDashboard from "./pages/SellerDashboard/SellerDashboard";
+
 
 const App = () => {
   const { loading } = useSelector((state) => state.loaders);
@@ -20,6 +22,14 @@ const App = () => {
             element={
               <ProtectedPage>
                 <Landing />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/SellerDashboard"
+            element={
+              <ProtectedPage>
+                <SellerDashboard />
               </ProtectedPage>
             }
           />
