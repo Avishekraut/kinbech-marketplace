@@ -26,7 +26,7 @@ const UserProfileButton = ({ user }) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative z-10">
       <div
         className="bg-white py-2 px-3 rounded flex items-center gap-1 cursor-pointer"
         onClick={toggleDropdown}
