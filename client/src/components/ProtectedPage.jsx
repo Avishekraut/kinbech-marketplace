@@ -92,7 +92,7 @@ const ProtectedPage = ({ children }) => {
             <Button
               type="primary"
               onClick={() => navigate("/SellerDashboard")}
-              className="flex justify-center items-center px-6 py-4 mx-2 rounded bg-[#14ae5c] text-white text-base font-medium active:scale-[.98] active:duration-75 transition-all ease-in-out"
+              className="flex justify-center items-center px-6 mx-2 rounded bg-[#14ae5c] text-white text-base font-medium active:scale-[.98] active:duration-75 transition-all ease-in-out"
             >
               Post Ad
             </Button>
