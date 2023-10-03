@@ -1,19 +1,60 @@
-import { Button, Col, Form, Input, Modal, Row, Select, Tabs } from "antd";
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  Modal,
+  Row,
+  Select,
+  Tabs,
+  message,
+} from "antd";
 import TextArea from "antd/es/input/TextArea";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Addproduct } from "../../../apicalls/products";
+import { setLoader } from "../../../redux/loadersSlice";
 
 const additionalThings = [
   {
     label: "Bill Available",
-    name: "Bill Available",
+    name: "billAvaiable",
   },
   {
     label: "Warranty Available",
-    name: "Warranty Available",
+    name: "warrantyAvailable",
+  },
+];
+
+const rules = [
+  {
+    required: true,
+    message: "Required",
   },
 ];
 
 function ProductsForm({ showProductForm, setShowProductForm }) {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.users);
+  const formRef = React.useRef(null);
+  const onFinish = async (values) => {
+    try {
+      values.seller = user._id;
+      values.status = "pending";
+      dispatch(setLoader(true));
+      const response = await Addproduct(values);
+      dispatch(setLoader(false));
+      if (response.success) {
+        message.success(response.message);
+        setShowProductForm(false);
+      } else {
+        message.error(response.message);
+      }
+    } catch (error) {
+      dispatch(setLoader(false));
+      message.error(error.message);
+    }
+  };
   const handleCancel = () => {
     setShowProductForm(false);
   };
@@ -29,28 +70,33 @@ function ProductsForm({ showProductForm, setShowProductForm }) {
         <Button key="cancel" onClick={handleCancel}>
           Cancel
         </Button>,
-        <Button key="ok">OK</Button>,
+        <Button key="save" onClick={() => formRef.current.submit()}>
+          Save
+        </Button>,
       ]}
+      onOk={() => {
+        formRef.current.submit();
+      }}
     >
       <Tabs defaultActiveKey="1">
         <Tabs.TabPane tab="General" key="1">
-          <Form layout="vertical">
-            <Form.Item label="Name" name="name">
+          <Form layout="vertical" ref={formRef} onFinish={onFinish}>
+            <Form.Item label="Name" name="name" rules={rules}>
               <Input type="text" />
             </Form.Item>
-            <Form.Item label="Description" name="description">
+            <Form.Item label="Description" name="description" rules={rules}>
               <TextArea type="text" />
             </Form.Item>
 
             <Row gutter={[16, 16]}>
               <Col span={8}>
-                <Form.Item label="Price" name="price">
+                <Form.Item label="Price" name="price" rules={rules}>
                   <Input type="number" />
                 </Form.Item>
               </Col>
 
               <Col span={8}>
-                <Form.Item label="Category" name="category">
+                <Form.Item label="Category" name="category" rules={rules}>
                   <Select>
                     <option value="Household Electronics">
                       Household Electronics
@@ -65,7 +111,7 @@ function ProductsForm({ showProductForm, setShowProductForm }) {
               </Col>
 
               <Col span={8}>
-                <Form.Item label="Condition" name="condition">
+                <Form.Item label="Condition" name="condition" rules={rules}>
                   <Select>
                     <option value="Brand New">Brand New</option>
                     <option value="Used-Like-New">Used-Like New</option>
@@ -78,8 +124,18 @@ function ProductsForm({ showProductForm, setShowProductForm }) {
             <div className="flex gap-10">
               {additionalThings.map((item) => {
                 return (
-                  <Form.Item label={item.label} name={item.name}>
-                    <Input type="checkbox" className="w-8 h-8" />
+                  <Form.Item label={item.label} name={item.name} valuePropName="checked">
+                    <Input
+                      type="checkbox"
+                      className="w-8 h-8"
+                      value={item.name}
+                      onChange={(e) => {
+                        formRef.current.setFieldsValue({
+                          [item.name]: e.target.checked,
+                        });
+                      }}
+                      checked={formRef.current?.getFieldsValue(item.name)}
+                    />
                   </Form.Item>
                 );
               })}
