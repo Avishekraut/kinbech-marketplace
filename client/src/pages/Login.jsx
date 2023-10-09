@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../redux/loadersSlice";
+import Navbar from "../components/Navbar";
 
 const rules = [
   {
@@ -19,9 +20,9 @@ const Login = () => {
   const dispatch = useDispatch();
   const onFinish = async (values) => {
     try {
-      dispatch(setLoader(true))
+      dispatch(setLoader(true));
       const response = await LoginUser(values);
-      dispatch(setLoader(false))
+      dispatch(setLoader(false));
       if (response.success) {
         message.success(response.message);
         localStorage.setItem("token", response.data);
@@ -30,7 +31,7 @@ const Login = () => {
         throw new Error(response.message);
       }
     } catch (error) {
-      dispatch(setLoader(false))
+      dispatch(setLoader(false));
       message.error(error.message);
     }
   };
@@ -43,6 +44,7 @@ const Login = () => {
 
   return (
     <>
+      <Navbar />
       <div className="flex justify-center my-12">
         <div className="w-[400px] border border-[#e0e3e4] rounded-sm px-7 py-10">
           <h1 className="text-3xl font-medium">Welcome back</h1>

@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../redux/loadersSlice";
+import Navbar from "../components/Navbar";
 
 const rules = [
   {
@@ -43,6 +44,7 @@ const Signup = () => {
 
   return (
     <>
+      <Navbar />
       <div className="flex justify-center my-12">
         <div className="w-[400px] border border-[#e0e3e4] rounded-sm px-7 py-10">
           <h1 className="text-3xl font-medium">Create an account</h1>
