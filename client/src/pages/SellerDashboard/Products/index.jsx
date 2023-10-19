@@ -6,6 +6,7 @@ import { DeleteProduct, GetProducts } from "../../../apicalls/products";
 import { setLoader } from "../../../redux/loadersSlice";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import moment from "moment";
 
 function Products() {
   const [selectedProduct, setSelectedProduct] = React.useState(null);
@@ -67,6 +68,12 @@ function Products() {
     {
       title: "Status",
       dataIndex: "status",
+    },
+    {
+      title: "Added On",
+      dataIndex: "createdAt",
+      render: (text, record) =>
+        moment(record.createdAt).format("DD-MM-YYYY hh:mm:ss A"),
     },
     {
       title: "Action",

@@ -22,7 +22,7 @@ router.post("/add-product", authMiddleware, async (req, res) => {
 //get all products
 router.get("/get-products", async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().sort({ createdAt: -1 });
     res.send({
       success: true,
       products,
@@ -67,8 +67,4 @@ router.delete("/delete-product/:id", authMiddleware, async (req, res) => {
   }
 });
 
-
-
-
 module.exports = router;
-
