@@ -51,7 +51,7 @@ function ProductsForm({
       } else {
         values.seller = user._id;
         values.status = "pending";
-        response = await Addproduct(values); // Ensure response is assigned here
+        response = await Addproduct(values);
       }
 
       dispatch(setLoader(false));
