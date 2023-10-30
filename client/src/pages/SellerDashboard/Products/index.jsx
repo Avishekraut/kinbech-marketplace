@@ -73,7 +73,7 @@ function Products() {
       title: "Added On",
       dataIndex: "createdAt",
       render: (text, record) =>
-        moment(record.createdAt).format("DD-MM-YYYY hh:mm:ss A"),
+        moment(record.createdAt).format("DD-MM-YYYY hh:mm A"),
     },
     {
       title: "Action",
