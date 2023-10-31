@@ -14,6 +14,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Addproduct, EditProduct } from "../../../apicalls/products";
 import { setLoader } from "../../../redux/loadersSlice";
+import Images from "./Images";
 
 const additionalThings = [
   {
@@ -85,14 +86,16 @@ function ProductsForm({
       onCancel={handleCancel}
       centered
       width={1000}
-      footer={[
-        <Button key="cancel" onClick={handleCancel}>
-          Cancel
-        </Button>,
-        <Button key="save" onClick={() => formRef.current.submit()}>
-          Save
-        </Button>,
-      ]}
+      //Disabled footer for all tabs(Model)
+      // footer={[
+      //   <Button key="cancel" onClick={handleCancel}>
+      //     Cancel
+      //   </Button>,
+      //   <Button key="save" onClick={() => formRef.current.submit()}>
+      //     Save
+      //   </Button>,
+      // ]}
+      footer={null}
       onOk={() => {
         formRef.current.submit();
       }}
@@ -168,9 +171,22 @@ function ProductsForm({
                 })}
               </div>
             </Form>
+            {/* Footer buttons for the "General" tab */}
+            <div className="flex justify-end gap-2">
+              <Button key="cancel" onClick={handleCancel}>
+                Cancel
+              </Button>
+              <Button key="save" onClick={() => formRef.current.submit()}>
+                Save
+              </Button>
+            </div>
           </Tabs.TabPane>
-          <Tabs.TabPane tab="Images" key="2">
-            <h1>Images</h1>
+          <Tabs.TabPane tab="Images" key="2" disabled={!selectedProduct}>
+            <Images
+              selectedProduct={selectedProduct}
+              getData={getData}
+              setShowProductForm
+            />
           </Tabs.TabPane>
         </Tabs>
       </div>
