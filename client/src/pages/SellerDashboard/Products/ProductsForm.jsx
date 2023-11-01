@@ -184,8 +184,8 @@ function ProductsForm({
           <Tabs.TabPane tab="Images" key="2" disabled={!selectedProduct}>
             <Images
               selectedProduct={selectedProduct}
+              setShowProductForm={setShowProductForm}
               getData={getData}
-              setShowProductForm
             />
           </Tabs.TabPane>
         </Tabs>
