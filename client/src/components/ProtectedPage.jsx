@@ -87,7 +87,10 @@ const ProtectedPage = ({ children }) => {
       <div>
         {/* Header */}
         <div className="flex justify-between items-center py-2 my-3">
-          <h1 className="font-bold text-2xl cursor-pointer" onClick={() => navigate("/")}>
+          <h1
+            className="font-bold text-2xl cursor-pointer"
+            onClick={() => navigate("/")}
+          >
             KinBech
           </h1>
           <div className="flex items-center">
@@ -102,7 +105,7 @@ const ProtectedPage = ({ children }) => {
               }}
               className="flex justify-center items-center px-6 mx-2 rounded bg-[#14ae5c] text-white text-base font-medium active:scale-[.98] active:duration-75 transition-all ease-in-out"
             >
-              Post Ad
+              {user.role === "admin" ? "Dashboard" : "Post Ad"}
             </Button>
             <UserProfileButton user={user} />
           </div>
