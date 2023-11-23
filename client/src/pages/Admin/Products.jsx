@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Table, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { GetProducts } from "../../apicalls/products";
+import { GetProducts, UpdateProductStatus } from "../../apicalls/products";
 import { setLoader } from "../../redux/loadersSlice";
 import moment from "moment";
 
@@ -22,7 +22,23 @@ function Products() {
     }
   };
 
-  const onStatusUpdate = async (id, status) => {};
+  const onStatusUpdate = async (id, status) => {
+    try {
+      dispatch(setLoader(true));
+      const response = await UpdateProductStatus(id, status);
+      dispatch(setLoader(false));
+      if (response.success) {
+        message.success(response.message);
+        getData();
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      dispatch(setLoader(false));
+      message.error(error.message);
+    }
+  };
+
   const columns = [
     {
       title: "Product",
@@ -54,6 +70,9 @@ function Products() {
     {
       title: "Status",
       dataIndex: "status",
+      render: (text, record) => {
+        return record.status.toUpperCase();
+      },
     },
     {
       title: "Added On",
