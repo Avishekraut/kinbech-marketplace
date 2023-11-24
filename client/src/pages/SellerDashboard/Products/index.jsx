@@ -71,6 +71,9 @@ function Products() {
     {
       title: "Status",
       dataIndex: "status",
+      render: (text, record) => {
+        return record.status.toUpperCase();
+      },
     },
     {
       title: "Added On",
