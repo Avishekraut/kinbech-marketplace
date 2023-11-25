@@ -35,7 +35,6 @@ router.post("/register", async (req, res) => {
 });
 
 // user login
-
 router.post("/login", async (req, res) => {
   try {
     //check if user exists
@@ -74,7 +73,6 @@ router.post("/login", async (req, res) => {
 });
 
 //get current user
-
 router.get("/get-current-user", authMiddleware, async (req, res) => {
   try {
     const user = await User.findById(req.body.userId);
@@ -82,6 +80,23 @@ router.get("/get-current-user", authMiddleware, async (req, res) => {
       success: true,
       message: "User fetched successfully",
       data: user,
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+//get all users
+router.get("/get-users", authMiddleware, async (req, res) => {
+  try {
+    const users = await User.find();
+    res.send({
+      success: true,
+      message: "User fetched successfully",
+      data: users,
     });
   } catch (error) {
     res.send({
