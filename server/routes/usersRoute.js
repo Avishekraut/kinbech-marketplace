@@ -42,6 +42,10 @@ router.post("/login", async (req, res) => {
     if (!user) {
       throw new Error("User does not exist");
     }
+    // if user is active
+    if (user.status !== "active") {
+      throw new Error("The user account is blocked, please contact admin");
+    }
 
     //check password
     const validPassword = await bcrypt.compare(
@@ -97,6 +101,22 @@ router.get("/get-users", authMiddleware, async (req, res) => {
       success: true,
       message: "User fetched successfully",
       data: users,
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+//update user status
+router.put("/update-user-status/:id", authMiddleware, async (req, res) => {
+  try {
+    await User.findByIdAndUpdate(req.params.id, req.body);
+    res.send({
+      success: true,
+      message: "User status updated successfully",
     });
   } catch (error) {
     res.send({
