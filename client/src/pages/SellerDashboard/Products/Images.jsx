@@ -65,7 +65,7 @@ const Images = ({ selectedProduct, setShowProductForm, getData }) => {
                 src={image}
                 alt="img"
               ></img>
-              <RiDeleteBin6Line size={18} onClick={() => deleteImage(image)} />
+              <RiDeleteBin6Line size={18} className= "cursor-pointer" onClick={() => deleteImage(image)} />
             </div>
           );
         })}
