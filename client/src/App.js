@@ -1,6 +1,5 @@
 import React from "react";
 import Footer from "./components/Footer";
-import Landing from "./pages/Landing";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { Route, Routes } from "react-router-dom";
@@ -9,6 +8,7 @@ import Spinner from "./components/Spinner";
 import { useSelector } from "react-redux";
 import SellerDashboard from "./pages/SellerDashboard/SellerDashboard";
 import Admin from "./pages/Admin";
+import Home from "./pages/Home";
 
 const App = () => {
   const { loading } = useSelector((state) => state.loaders);
@@ -21,7 +21,7 @@ const App = () => {
             path="/"
             element={
               <ProtectedPage>
-                <Landing />
+                <Home />
               </ProtectedPage>
             }
           />
