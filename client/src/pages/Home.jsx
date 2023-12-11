@@ -49,11 +49,12 @@ const Home = () => {
                 alt=""
                 className="w-full h-48 object-cover"
               />
-              <div className="px-2 flex flex-col gap-2">
+              <div className="px-2 flex flex-col gap-1">
                 <h1 className="text-lg font-semibold ">{product.name}</h1>
                 <p className="text-sm overflow-hidden whitespace-nowrap overflow-ellipsis">{product.description}</p>
-                <span className="text-lg font-semibold text-green-500">
+                <span className="flex items-center justify-between text-lg font-semibold text-green-500">
                   Rs. {product.price}
+                  <p className="text-sm font-normal text-black">{product.condition}</p>
                 </span>
               </div>
             </div>
