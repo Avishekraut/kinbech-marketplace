@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { GetProductById, GetProducts } from "../../apicalls/products";
 import { setLoader } from "../../redux/loadersSlice";
+import Divider from "../../components/Divider";
+import moment from "moment";
 
 const ProductInfo = () => {
   const [selectedImageIndex, setSelectedImageIndex] = React.useState(0);
@@ -31,7 +33,7 @@ const ProductInfo = () => {
   return (
     product && (
       <div>
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-2 gap-5">
           <div className="flex flex-col gap-2">
             <img
               src={product.images[selectedImageIndex]}
@@ -54,6 +56,50 @@ const ProductInfo = () => {
                   />
                 );
               })}
+            </div>
+          </div>
+
+          {/* Product Details */}
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-1">
+              <h1 className="text-2xl font-semibold">{product.name}</h1>
+              <span className="font-medium text-green-500">
+                {product.condition}
+              </span>
+              <span className="font-medium text-sm">Posted: {moment(product.createdAt).fromNow()}</span>
+              <span>{product.description}</span>
+            </div>
+            <Divider />
+            <div className="flex flex-col">
+              <h1 className="text-xl font-semibold">Item Details</h1>
+              <div className="flex justify-between mt-2">
+                <span>Price</span>
+                <span>Rs. {product.price}</span>
+              </div>
+              <div className="flex justify-between mt-2">
+                <span>Category</span>
+                <span>{product.category}</span>
+              </div>
+              <div className="flex justify-between mt-2">
+                <span>Bill Available</span>
+                <span>{product.billAvailable ? "Yes" : "No"}</span>
+              </div>
+              <div className="flex justify-between mt-2">
+                <span>Warranty Available</span>
+                <span>{product.warrantyAvailable ? "Yes" : "No"}</span>
+              </div>
+            </div>
+            <Divider />
+            <div className="flex flex-col">
+              <h1 className="text-xl font-semibold">Seller Details</h1>
+              <div className="flex justify-between mt-2">
+                <span>Name</span>
+                <span>{product.seller.name}</span>
+              </div>
+              <div className="flex justify-between mt-2">
+                <span>Email</span>
+                <span>{product.seller.email}</span>
+              </div>
             </div>
           </div>
         </div>
