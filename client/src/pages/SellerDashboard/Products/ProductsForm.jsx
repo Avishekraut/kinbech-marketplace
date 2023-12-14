@@ -86,15 +86,6 @@ function ProductsForm({
       onCancel={handleCancel}
       centered
       width={1000}
-      //Disabled footer for all tabs(Model)
-      // footer={[
-      //   <Button key="cancel" onClick={handleCancel}>
-      //     Cancel
-      //   </Button>,
-      //   <Button key="save" onClick={() => formRef.current.submit()}>
-      //     Save
-      //   </Button>,
-      // ]}
       footer={null}
       onOk={() => {
         formRef.current.submit();
