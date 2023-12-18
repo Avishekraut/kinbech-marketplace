@@ -1,14 +1,19 @@
 import React, { useEffect } from "react";
 import { Button, message } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { GetProductById, GetProducts } from "../../apicalls/products";
+import {
+  GetAllBids,
+  GetProductById,
+  GetProducts,
+} from "../../apicalls/products";
 import { setLoader } from "../../redux/loadersSlice";
 import Divider from "../../components/Divider";
 import moment from "moment";
 import BidModal from "./BidModal";
 
 const ProductInfo = () => {
+  const { user } = useSelector((state) => state.users);
   const [showAddNewBid, setShowAddNewBid] = React.useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = React.useState(0);
   const [product, setProduct] = React.useState(null);
@@ -18,10 +23,14 @@ const ProductInfo = () => {
   const getData = async () => {
     try {
       dispatch(setLoader(true));
-      const respone = await GetProductById(id);
+      const response = await GetProductById(id);
       dispatch(setLoader(false));
-      if (respone.success) {
-        setProduct(respone.data);
+      if (response.success) {
+        const bidsResponse = await GetAllBids({ product: id });
+        setProduct({
+          ...response.data,
+          bids: bidsResponse.data,
+        });
       }
     } catch (error) {
       dispatch(setLoader(false));
@@ -111,19 +120,24 @@ const ProductInfo = () => {
             <div className="flex flex-col">
               <div className="flex justify-between">
                 <h1 className="text-xl font-semibold">Bids</h1>
-                <Button onClick={() => setShowAddNewBid(!showAddNewBid)}>
+                <Button
+                  onClick={() => setShowAddNewBid(!showAddNewBid)}
+                  disabled={user._id === product.seller._id}
+                >
                   New Bid
                 </Button>
               </div>
             </div>
           </div>
         </div>
-        {showAddNewBid && <BidModal 
-        product={product}
-        reloadData={getData}
-        showBidModal={showAddNewBid}
-        setShowBidModal={setShowAddNewBid}
-        />}
+        {showAddNewBid && (
+          <BidModal
+            product={product}
+            reloadData={getData}
+            showBidModal={showAddNewBid}
+            setShowBidModal={setShowAddNewBid}
+          />
+        )}
       </div>
     )
   );
