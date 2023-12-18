@@ -3,7 +3,7 @@ const Bid = require("../models/bidModel");
 const authMiddleware = require("../middlewares/authMiddleware");
 
 //place a new Bid
-router.post("/place-new-bid", async (req, res) => {
+router.post("/place-new-bid", authMiddleware, async (req, res) => {
   try {
     const newBid = new Bid(req.body);
     await newBid.save();
@@ -34,3 +34,5 @@ router.get("/get-all-bids", authMiddleware, async (req, res) => {
     res.send({ success: false, message: error.message });
   }
 });
+
+module.exports = router;
