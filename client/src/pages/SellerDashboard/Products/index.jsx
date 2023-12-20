@@ -6,9 +6,12 @@ import { DeleteProduct, GetProducts } from "../../../apicalls/products";
 import { setLoader } from "../../../redux/loadersSlice";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { LiaCommentsDollarSolid } from "react-icons/lia";
 import moment from "moment";
+import Bids from "./Bids";
 
 function Products() {
+  const [showBids, setShowBids] = React.useState(false);
   const [selectedProduct, setSelectedProduct] = React.useState(null);
   const [products, setProducts] = React.useState([]);
   const [showProductForm, setShowProductForm] = useState(false);
@@ -100,6 +103,13 @@ function Products() {
                 deleteProduct(record._id);
               }}
             />
+            <LiaCommentsDollarSolid
+              size={18}
+              onClick={() => {
+                setSelectedProduct(record);
+                setShowBids(true);
+              }}
+            />
           </div>
         );
       },
@@ -130,6 +140,14 @@ function Products() {
           setShowProductForm={setShowProductForm}
           selectedProduct={selectedProduct}
           getData={getData}
+        />
+      )}
+
+      {showBids && (
+        <Bids
+          showBidsModal={showBids}
+          setShowBidsModal={setShowBids}
+          selectedProduct={selectedProduct}
         />
       )}
     </div>
