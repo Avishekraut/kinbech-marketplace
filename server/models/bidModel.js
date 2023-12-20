@@ -7,11 +7,11 @@ const bidSchema = new mongoose.Schema(
     },
     seller: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "seller",
+      ref: "users",
     },
     buyer: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "buyer",
+      ref: "users",
     },
     bidAmount: {
       type: Number,
