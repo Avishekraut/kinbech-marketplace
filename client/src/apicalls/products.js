@@ -107,7 +107,7 @@ export const PlaceNewBid = async (payload) => {
 
 export const GetAllBids = async (filters) => {
   try {
-    const response = await axiosInstance.post("api/bids/get-all-bids", filters);
+    const response = await axiosInstance.post("/api/bids/get-all-bids", filters);
     return response.data;
   } catch (error) {
     return error.message;
