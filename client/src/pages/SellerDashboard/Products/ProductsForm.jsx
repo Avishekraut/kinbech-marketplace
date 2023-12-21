@@ -160,6 +160,22 @@ function ProductsForm({
                     </Form.Item>
                   );
                 })}
+                <Form.Item
+                  label="Show Product Bids"
+                  name="ShowProductBids"
+                  valuePropName="checked"
+                >
+                  <Input
+                    type="checkbox"
+                    className="w-8 h-8"
+                    onChange={(e) => {
+                      formRef.current.setFieldsValue({
+                        ShowProductBids: e.target.checked,
+                      });
+                    }}
+                    checked={formRef.current?.getFieldsValue("ShowProductBids")}
+                  />
+                </Form.Item>
               </div>
             </Form>
             {/* Footer buttons for the "General" tab */}

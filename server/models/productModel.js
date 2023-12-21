@@ -38,7 +38,7 @@ const productSchema = new mongoose.Schema(
     },
     ShowProductBids: {
       type: "boolean",
-      default: false,
+      default: true,
     },
     seller: {
       type: mongoose.Schema.Types.ObjectId,
