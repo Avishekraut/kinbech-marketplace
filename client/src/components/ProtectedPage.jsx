@@ -103,7 +103,7 @@ const ProtectedPage = ({ children }) => {
                   navigate("/admin");
                 }
               }}
-              className="flex justify-center items-center px-6 mx-2 rounded bg-[#14ae5c] text-white text-base font-medium active:scale-[.98] active:duration-75 transition-all ease-in-out"
+              className="flex justify-center items-center px-4 mx-2 rounded bg-[#14ae5c] text-white text-base font-medium active:scale-[.98] active:duration-75 transition-all ease-in-out"
             >
               {user.role === "admin" ? "Dashboard" : "My Listings"}
             </Button>
