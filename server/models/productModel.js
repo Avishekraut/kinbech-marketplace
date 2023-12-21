@@ -36,18 +36,22 @@ const productSchema = new mongoose.Schema(
       default: false,
       required: true,
     },
+    ShowProductBids: {
+      type: "boolean",
+      default: false,
+    },
     seller: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
       required: true,
     },
     status: {
-        type: String,
-        default: "pending",
-        required: true,
-    }
+      type: String,
+      default: "pending",
+      required: true,
+    },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("products", productSchema)
+module.exports = mongoose.model("products", productSchema);
