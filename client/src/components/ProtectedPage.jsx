@@ -105,7 +105,7 @@ const ProtectedPage = ({ children }) => {
               }}
               className="flex justify-center items-center px-6 mx-2 rounded bg-[#14ae5c] text-white text-base font-medium active:scale-[.98] active:duration-75 transition-all ease-in-out"
             >
-              {user.role === "admin" ? "Dashboard" : "Post Ad"}
+              {user.role === "admin" ? "Dashboard" : "My Listings"}
             </Button>
             <UserProfileButton user={user} />
           </div>
