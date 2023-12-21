@@ -127,6 +127,28 @@ const ProductInfo = () => {
                   New Bid
                 </Button>
               </div>
+              {product.ShowProductBids &&
+                product.bids?.map((bid) => {
+                  return (
+                    <div
+                      key={bid._id}
+                      className="border border-gray-300 border-solid p-3 rounded mt-4"
+                    >
+                      <div className="flex justify-between mt-2">
+                        <span>Name</span>
+                        <span>{bid.buyer.name}</span>
+                      </div>
+                      <div className="flex justify-between mt-2">
+                        <span>Bid Amount</span>
+                        <span>Rs. {bid.bidAmount}</span>
+                      </div>
+                      <div className="flex justify-between mt-2">
+                        <span>Bid Placed On</span>
+                        <span>{moment(bid.createdAt).calendar()}</span>
+                      </div>
+                    </div>
+                  );
+                })}
             </div>
           </div>
         </div>
