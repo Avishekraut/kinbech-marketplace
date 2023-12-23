@@ -8,8 +8,8 @@ import Spinner from "./components/Spinner";
 import { useSelector } from "react-redux";
 import SellerDashboard from "./pages/SellerDashboard/SellerDashboard";
 import Admin from "./pages/Admin";
-import Home from "./pages/Home";
 import ProductInfo from "./pages/ProductInfo";
+import Home from "./pages/Home/Home";
 
 const App = () => {
   const { loading } = useSelector((state) => state.loaders);
