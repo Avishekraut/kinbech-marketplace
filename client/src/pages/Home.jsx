@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import "../App.css";
 import Hero from "../components/Hero";
-import Title from "../components/Title";
 import { GetProducts } from "../apicalls/products";
 import { message } from "antd";
 import { setLoader } from "../redux/loadersSlice";
@@ -37,11 +36,7 @@ const Home = () => {
   return (
     <div>
       <Hero />
-      {/* <Categories /> */}
-      <Title content="Featured Ads" />
-      {/* <FeaturedDisProducts /> */}
-      {/* <Title content="Latest Uploads" /> */}
-      {/* <LatestUploads /> */}
+      <h1 className="my-6 font-semibold text-lg">Featured Ads</h1>
       <div className="grid grid-cols-4 gap-5">
         {products?.map((product) => {
           return (
@@ -53,7 +48,7 @@ const Home = () => {
               <img
                 src={product.images[0]}
                 alt=""
-                className="w-full h-48 object-cover"
+                className="w-full h-52 object-cover"
               />
               <div className="px-2 flex flex-col gap-1">
                 <h1 className="text-lg font-semibold ">{product.name}</h1>
