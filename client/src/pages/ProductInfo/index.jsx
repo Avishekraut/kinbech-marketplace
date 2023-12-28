@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { FaRegEye } from "react-icons/fa";
+
 import {
   GetAllBids,
   GetProductById,
   GetProducts,
+  UpdateViewCount,
 } from "../../apicalls/products";
 import { setLoader } from "../../redux/loadersSlice";
 import Divider from "../../components/Divider";
@@ -13,6 +16,7 @@ import moment from "moment";
 import BidModal from "./BidModal";
 
 const ProductInfo = () => {
+  const [viewCount, setViewCount] = useState(null);
   const { user } = useSelector((state) => state.users);
   const [showAddNewBid, setShowAddNewBid] = React.useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = React.useState(0);
@@ -40,6 +44,16 @@ const ProductInfo = () => {
 
   useEffect(() => {
     getData();
+
+    // Call the UpdateViewCount function when the component mounts
+    UpdateViewCount(id)
+      .then(updatedViewCount => {
+        // Set the view count in the component state
+        setViewCount(updatedViewCount);
+      })
+      .catch(error => {
+        // Handle errors if needed
+      });
   }, []);
   return (
     product && (
@@ -68,6 +82,7 @@ const ProductInfo = () => {
                 );
               })}
             </div>
+            <span className="flex gap-2 items-center"><FaRegEye size={18}/>{viewCount} Views</span>
           </div>
 
           {/* Product Details */}
