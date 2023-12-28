@@ -85,6 +85,10 @@ function Products() {
         moment(record.createdAt).format("DD-MM-YYYY hh:mm A"),
     },
     {
+      title: "Views",
+      dataIndex: "viewCount",
+    },
+    {
       title: "Action",
       dataIndex: "action",
       render: (text, record) => {
