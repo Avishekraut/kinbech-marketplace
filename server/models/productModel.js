@@ -50,6 +50,9 @@ const productSchema = new mongoose.Schema(
       default: "pending",
       required: true,
     },
+    viewCount: {
+      type: "number",
+    },
   },
   { timestamps: true }
 );
