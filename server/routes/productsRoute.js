@@ -157,4 +157,38 @@ router.put("/update-product-status/:id", authMiddleware, async (req, res) => {
   }
 });
 
+// Update page view count for a specific product
+router.post("/update-view-count/:id", authMiddleware, async (req, res) => {
+  try {
+    const productId = req.params.id;
+    
+    // Retrieve the current product information from the database
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    // Increment the view count
+    const updatedViewCount = (product.viewCount || 0) + 1;
+
+    // Update the view count in the database
+    const result = await Product.findByIdAndUpdate(
+      productId,
+      { viewCount: updatedViewCount },
+      { new: true }
+    );
+
+    if (!result) {
+      throw new Error("Failed to update view count");
+    }
+
+    // Send the updated view count as a response
+    res.json({ viewCount: updatedViewCount });
+  } catch (error) {
+    console.error("Error updating view count:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 module.exports = router;

@@ -107,8 +107,29 @@ export const PlaceNewBid = async (payload) => {
 
 export const GetAllBids = async (filters) => {
   try {
-    const response = await axiosInstance.post("/api/bids/get-all-bids", filters);
+    const response = await axiosInstance.post(
+      "/api/bids/get-all-bids",
+      filters
+    );
     return response.data;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+//update view count
+export const UpdateViewCount = async (id) => {
+  try {
+    // Make a POST request to the "/update-view-count" endpoint
+    const response = await axiosInstance.post(
+      `/api/products/update-view-count/${id}`
+    );
+
+    // Extract the updated view count from the response
+    const updatedViewCount = response.data.viewCount;
+
+    // Return the updated view count if needed
+    return updatedViewCount;
   } catch (error) {
     return error.message;
   }
