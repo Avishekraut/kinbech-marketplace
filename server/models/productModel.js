@@ -52,6 +52,7 @@ const productSchema = new mongoose.Schema(
     },
     viewCount: {
       type: "number",
+      default: 0,
     },
   },
   { timestamps: true }
