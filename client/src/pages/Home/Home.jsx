@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "../../App.css";
-import Hero from "../../components/Hero";
+// import Hero from "../../components/Hero";
 import { GetProducts } from "../../apicalls/products";
 import { message } from "antd";
 import { setLoader } from "../../redux/loadersSlice";
