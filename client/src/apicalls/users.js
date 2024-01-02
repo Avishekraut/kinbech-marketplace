@@ -53,3 +53,22 @@ export const UpdateUserStatus = async (id, status) => {
     return error.message;
   }
 };
+
+//forgot password
+export const forgotPassword = async (payload) => {
+  try {
+    const response = await axiosInstance.post('/api/users/forgot-password', payload);
+    return response.data;
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+//verify otp and update password
+export const verifyOTP = async (payload) => {
+  try {
+    const response = await axiosInstance.post('/api/users/verify-otp', payload);
+    return response.data;
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
