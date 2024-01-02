@@ -10,6 +10,8 @@ import SellerDashboard from "./pages/SellerDashboard/SellerDashboard";
 import Admin from "./pages/Admin";
 import ProductInfo from "./pages/ProductInfo";
 import Home from "./pages/Home/Home";
+import ForgotPassword from "./pages/ForgotPassword";
+import OTPVerification from "./pages/OTPVerification";
 
 const App = () => {
   const { loading } = useSelector((state) => state.loaders);
@@ -54,6 +56,8 @@ const App = () => {
 
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/otpverification" element={<OTPVerification />} />
         </Routes>
       </section>
       <Footer />
