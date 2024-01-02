@@ -4,6 +4,7 @@ const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const authMiddleware = require("../middlewares/authMiddleware");
+const nodemailer = require("nodemailer");
 
 //new user registration
 router.post("/register", async (req, res) => {
@@ -119,6 +120,112 @@ router.put("/update-user-status/:id", authMiddleware, async (req, res) => {
       message: "User status updated successfully",
     });
   } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+//forgot password requests with OTP
+router.post("/forgot-password", async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      throw new Error("User does not exist");
+    }
+
+    // Function to generate a random OTP of specified length
+    function generateOTP(length) {
+      const digits = "0123456789";
+      let otp = "";
+      for (let i = 0; i < length; i++) {
+        otp += digits[Math.floor(Math.random() * 10)];
+      }
+      return otp;
+    }
+
+    // Generate a unique OTP for password reset only if the user doesn't have one
+    if (!user.otpSecret) {
+      const otp = generateOTP(6);
+
+      // Save the OTP secret to the user in the database
+      user.otpSecret = otp;
+      await user.save();
+    }
+
+    // Get the current OTP from the user's document
+    const otp = user.otpSecret;
+
+    // Send an email with the OTP for password reset
+    const transporter = nodemailer.createTransport({
+      // Configure your nodemailer transporter
+      service: "gmail",
+      auth: {
+        user: "kinbechmarketplace@gmail.com",
+        pass: "ltwf yrad pvnd ubog",
+      },
+    });
+
+    const mailOptions = {
+      from: "kinbechmarketplace@gmail.com",
+      to: user.email,
+      subject: "Password Reset OTP",
+      html: `
+      <p>Hi ${user.name},</p>
+      <p>We received a request to reset your password. To reset your password, use this OTP: <strong>${otp}</strong></p>
+      <p>Thank you!<br>Kinbech Support Team</p>
+    `,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    // Send a success response
+    res.send({
+      success: true,
+      message: "OTP sent to your email for password reset",
+    });
+  } catch (error) {
+    // Send an error response
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+// OTP verification and password update
+router.post("/verify-otp", async (req, res) => {
+  try {
+    const { email, otp, newPassword } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      throw new Error("User does not exist");
+    }
+
+    // Verify the OTP
+    if (user.otpSecret !== otp) {
+      throw new Error("Invalid OTP");
+    }
+
+    // Update the user's password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+
+    // Clear the OTP-related fields
+    user.otpSecret = null;
+
+    // Save the updated user
+    await user.save();
+
+    // Send a success response
+    res.send({
+      success: true,
+      message: "Password updated successfully",
+    });
+  } catch (error) {
+    // Send an error response
     res.send({
       success: false,
       message: error.message,
