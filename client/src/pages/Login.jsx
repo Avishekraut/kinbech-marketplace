@@ -80,7 +80,7 @@ const Login = () => {
             </Button>
 
             <div className="mt-4 text-center text-base">
-              <Link className="text-[#14ae5c] hover:text-black" to="/login">
+              <Link className="text-[#14ae5c] hover:text-black" to="/forgotpassword">
                 Forgot Your Password?
               </Link>
             </div>
