@@ -3,6 +3,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../redux/loadersSlice";
 import { PlaceNewBid } from "../../apicalls/products";
+import { AddNotification } from "../../apicalls/notifications";
 
 const BidModal = ({ showBidModal, setShowBidModal, product, reloadData }) => {
   const { user } = useSelector((state) => state.users);
@@ -21,13 +22,23 @@ const BidModal = ({ showBidModal, setShowBidModal, product, reloadData }) => {
       dispatch(setLoader(false));
       if (response.success) {
         message.success("Bid added successfully");
+
+        //send notification to seller
+        await AddNotification({
+          title: "New Bid Alert!",
+          message: ` ${user.name} just placed a new bid of Rs.${values.bidAmount} on your product, ${product.name}.`,
+          user: product.seller._id,
+          onClick: `/profile`,
+          read: false,
+        });
+
         reloadData();
         setShowBidModal(false);
       } else {
         throw new Error(response.message);
       }
     } catch (error) {
-      message.error(error.messsage);
+      message.error(error.message);
       dispatch(setLoader(false));
     }
   };
@@ -41,7 +52,9 @@ const BidModal = ({ showBidModal, setShowBidModal, product, reloadData }) => {
         <Button key="Cancel" onClick={() => setShowBidModal(false)}>
           Cancel
         </Button>,
-        <Button key="submit" onClick={() => formRef.current.submit()}>Submit</Button>,
+        <Button key="submit" onClick={() => formRef.current.submit()}>
+          Submit
+        </Button>,
       ]}
     >
       <div className="flex flex-col gap-5">
