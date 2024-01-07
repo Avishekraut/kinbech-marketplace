@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { message } from "antd";
+import { Avatar, Badge, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { GetCurrentUser } from "../apicalls/users";
 // import { AiOutlineMenu } from "react-icons/ai";
@@ -10,6 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../redux/loadersSlice";
 import { SetUser } from "../redux/usersSlice";
 import { Button } from "antd";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import Notifications from "./Notifications";
+import { GetAllNotifications } from "../apicalls/notifications";
 
 //UserProfileButton component
 const UserProfileButton = ({ user }) => {
@@ -35,6 +38,7 @@ const UserProfileButton = ({ user }) => {
         <span>{user.name}</span>
         <RiArrowDropDownLine size={22} />
       </div>
+
       {isDropdownOpen && (
         <div className="absolute right-0 mt-2 w-[170px] bg-white border border-gray-300 rounded shadow-md">
           <ul className="py-2">
@@ -54,6 +58,8 @@ const UserProfileButton = ({ user }) => {
 };
 
 const ProtectedPage = ({ children }) => {
+  const [notifications = [], setNotifications] = useState([]);
+  const [showNotifications, setShowNotifications] = useState(false);
   const { user } = useSelector((state) => state.users);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -74,9 +80,26 @@ const ProtectedPage = ({ children }) => {
       message.error(error.message);
     }
   };
+
+  const getNotifications = async () => {
+    try {
+      dispatch(setLoader(true));
+      const response = await GetAllNotifications();
+      dispatch(setLoader(false));
+      if (response.success) {
+        setNotifications(response.data);
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      dispatch(setLoader(false));
+      message.error(error.message);
+    }
+  };
   useEffect(() => {
     if (localStorage.getItem("token")) {
       validateToken();
+      getNotifications();
     } else {
       navigate("/Login");
     }
@@ -108,9 +131,32 @@ const ProtectedPage = ({ children }) => {
               {user.role === "admin" ? "Dashboard" : "My Listings"}
             </Button>
             <UserProfileButton user={user} />
+            <Badge
+              count={
+                notifications?.filter((notification) => !notification.read)
+                  .length
+              }
+              onClick={() => setShowNotifications(true)}
+              className="cursor-pointer"
+            >
+              <Avatar
+                className="flex justify-center"
+                shape="circle"
+                icon={<IoMdNotificationsOutline size={28} />}
+              />
+            </Badge>
           </div>
         </div>
         <div>{children}</div>
+
+        {
+          <Notifications
+            notifications={notifications}
+            reloadNotifications={setNotifications}
+            showNotifications={showNotifications}
+            setShowNotifications={setShowNotifications}
+          />
+        }
       </div>
     )
   );
