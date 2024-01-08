@@ -26,9 +26,9 @@ const BidModal = ({ showBidModal, setShowBidModal, product, reloadData }) => {
         //send notification to seller
         await AddNotification({
           title: "New Bid Alert!",
-          message: ` ${user.name} just placed a new bid of Rs.${values.bidAmount} on your product, ${product.name}.`,
+          message: ` ${user.name} placed a new bid of Rs.${values.bidAmount} on your product, ${product.name}.`,
           user: product.seller._id,
-          onClick: `/profile`,
+          onClick: `/SellerDashboard`,
           read: false,
         });
 
