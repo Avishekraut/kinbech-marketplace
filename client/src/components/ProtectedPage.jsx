@@ -12,7 +12,10 @@ import { SetUser } from "../redux/usersSlice";
 import { Button } from "antd";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import Notifications from "./Notifications";
-import { GetAllNotifications } from "../apicalls/notifications";
+import {
+  GetAllNotifications,
+  ReadAllNotifications,
+} from "../apicalls/notifications";
 
 //UserProfileButton component
 const UserProfileButton = ({ user }) => {
@@ -83,19 +86,30 @@ const ProtectedPage = ({ children }) => {
 
   const getNotifications = async () => {
     try {
-      dispatch(setLoader(true));
       const response = await GetAllNotifications();
-      dispatch(setLoader(false));
       if (response.success) {
         setNotifications(response.data);
       } else {
         throw new Error(response.message);
       }
     } catch (error) {
-      dispatch(setLoader(false));
       message.error(error.message);
     }
   };
+
+  const readNotifications = async () => {
+    try {
+      const response = await ReadAllNotifications();
+      if (response.success) {
+        getNotifications();
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       validateToken();
@@ -136,7 +150,10 @@ const ProtectedPage = ({ children }) => {
                 notifications?.filter((notification) => !notification.read)
                   .length
               }
-              onClick={() => setShowNotifications(true)}
+              onClick={() => {
+                readNotifications();
+                setShowNotifications(true);
+              }}
               className="cursor-pointer"
             >
               <Avatar
@@ -152,7 +169,7 @@ const ProtectedPage = ({ children }) => {
         {
           <Notifications
             notifications={notifications}
-            reloadNotifications={setNotifications}
+            reloadNotifications={getNotifications} 
             showNotifications={showNotifications}
             setShowNotifications={setShowNotifications}
           />
