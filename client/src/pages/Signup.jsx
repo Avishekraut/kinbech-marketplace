@@ -74,7 +74,7 @@ const Signup = () => {
               className="font-semibold"
               rules={rules}
             >
-              <Input
+              <Input.Password
                 type="password"
                 placeholder="Password"
                 className="border rounded-sm py-2"
