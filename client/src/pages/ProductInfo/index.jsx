@@ -52,7 +52,7 @@ const ProductInfo = () => {
         setViewCount(updatedViewCount);
       })
       .catch(error => {
-        // Handle errors if needed
+        message(error.message);
       });
   }, []);
   return (
