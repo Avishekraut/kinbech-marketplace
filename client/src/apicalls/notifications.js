@@ -41,7 +41,7 @@ export const DeleteNotification = async (id) => {
 export const ReadAllNotifications = async () => {
   try {
     const response = await axiosInstance.put(
-      "api/notifications/read-all-notifications"
+      "/api/notifications/read-all-notifications"
     );
     return response.data;
   } catch (error) {
