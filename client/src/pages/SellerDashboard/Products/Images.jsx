@@ -65,7 +65,11 @@ const Images = ({ selectedProduct, setShowProductForm, getData }) => {
                 src={image}
                 alt="img"
               ></img>
-              <RiDeleteBin6Line size={18} className= "cursor-pointer" onClick={() => deleteImage(image)} />
+              <RiDeleteBin6Line
+                size={18}
+                className="cursor-pointer"
+                onClick={() => deleteImage(image)}
+              />
             </div>
           );
         })}
@@ -77,6 +81,7 @@ const Images = ({ selectedProduct, setShowProductForm, getData }) => {
           setFile(info.file);
           setShowPreview(true);
         }}
+        fileList={file ? [file] : []}
         showUploadList={showPreview}
       >
         <Button type="dashed">Upload Image</Button>
