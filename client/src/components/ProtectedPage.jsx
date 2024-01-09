@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Badge, message } from "antd";
+import { Avatar, Badge, Dropdown, Menu, message, Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import { GetCurrentUser } from "../apicalls/users";
 // import { AiOutlineMenu } from "react-icons/ai";
 import { BiUser } from "react-icons/bi";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { TbLogout } from "react-icons/tb";
+import { MdOutlineLogout } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../redux/loadersSlice";
 import { SetUser } from "../redux/usersSlice";
-import { Button } from "antd";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import Notifications from "./Notifications";
 import {
@@ -23,41 +22,51 @@ const UserProfileButton = ({ user }) => {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/Login");
   };
+  const navigateProfile = () => {
+    navigate("/myprofile");
+  };
+
+  const menu = (
+    <Menu>
+      <Menu.Item
+        key="1"
+        icon={<BiUser size={18} />}
+        onClick={() => {
+          navigateProfile();
+        }}
+      >
+        My profile
+      </Menu.Item>
+      <Menu.Item
+        key="2"
+        icon={<MdOutlineLogout size={18} />}
+        onClick={() => {
+          handleLogout();
+        }}
+      >
+        Logout
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
-    <div className="relative z-10">
-      <div
-        className="bg-white py-2 px-3 rounded flex items-center gap-1 cursor-pointer"
-        onClick={toggleDropdown}
-      >
-        <BiUser size={18} />
-        <span>{user.name}</span>
-        <RiArrowDropDownLine size={22} />
-      </div>
-
-      {isDropdownOpen && (
-        <div className="absolute right-0 mt-2 w-[170px] bg-white border border-gray-300 rounded shadow-md">
-          <ul className="py-2">
-            <li
-              className="flex items-center justify-between px-4 hover:bg-gray-100 cursor-pointer"
-              onClick={handleLogout}
-            >
-              Logout
-              <TbLogout size={18} />
-            </li>
-            {/* Add additional dropdown items here */}
-          </ul>
+    <Dropdown
+      overlay={menu}
+      visible={isDropdownOpen}
+      onVisibleChange={(visible) => setIsDropdownOpen(visible)}
+    >
+      <div className="relative z-10">
+        <div className="bg-white py-2 px-3 rounded flex items-center gap-1 cursor-pointer">
+          <BiUser size={18} />
+          <span>{user.name}</span>
+          <RiArrowDropDownLine size={22} />
         </div>
-      )}
-    </div>
+      </div>
+    </Dropdown>
   );
 };
 
@@ -125,7 +134,12 @@ const ProtectedPage = ({ children }) => {
       <div>
         {/* Header */}
         <div className="flex justify-between items-center py-2 my-3">
-          <img src={Kinbechlogo} alt="kinbech logo" className="cursor-pointer w-36" onClick={() => navigate("/")} />
+          <img
+            src={Kinbechlogo}
+            alt="kinbech logo"
+            className="cursor-pointer w-36"
+            onClick={() => navigate("/")}
+          />
           <div className="flex items-center">
             <Button
               type="primary"
