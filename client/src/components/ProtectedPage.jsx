@@ -16,6 +16,7 @@ import {
   GetAllNotifications,
   ReadAllNotifications,
 } from "../apicalls/notifications";
+import Kinbechlogo from "../../src/images/kinbechLogo.png";
 
 //UserProfileButton component
 const UserProfileButton = ({ user }) => {
@@ -124,12 +125,7 @@ const ProtectedPage = ({ children }) => {
       <div>
         {/* Header */}
         <div className="flex justify-between items-center py-2 my-3">
-          <h1
-            className="font-bold text-2xl cursor-pointer"
-            onClick={() => navigate("/")}
-          >
-            KinBech
-          </h1>
+          <img src={Kinbechlogo} alt="kinbech logo" className="cursor-pointer w-36" onClick={() => navigate("/")} />
           <div className="flex items-center">
             <Button
               type="primary"
@@ -169,7 +165,7 @@ const ProtectedPage = ({ children }) => {
         {
           <Notifications
             notifications={notifications}
-            reloadNotifications={getNotifications} 
+            reloadNotifications={getNotifications}
             showNotifications={showNotifications}
             setShowNotifications={setShowNotifications}
           />
