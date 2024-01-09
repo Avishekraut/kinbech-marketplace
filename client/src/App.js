@@ -12,6 +12,7 @@ import ProductInfo from "./pages/ProductInfo";
 import Home from "./pages/Home/Home";
 import ForgotPassword from "./pages/ForgotPassword";
 import OTPVerification from "./pages/OTPVerification";
+import Myprofile from "./pages/Myprofile";
 
 const App = () => {
   const { loading } = useSelector((state) => state.loaders);
@@ -50,6 +51,14 @@ const App = () => {
             element={
               <ProtectedPage>
                 <Admin />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/myprofile"
+            element={
+              <ProtectedPage>
+                <Myprofile />
               </ProtectedPage>
             }
           />
