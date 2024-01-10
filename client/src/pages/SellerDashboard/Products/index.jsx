@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Table, message } from "antd";
+import { Button, Table, Tag, message } from "antd";
 import ProductsForm from "./ProductsForm";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteProduct, GetProducts } from "../../../apicalls/products";
@@ -84,7 +84,26 @@ function Products() {
       title: "Status",
       dataIndex: "status",
       render: (text, record) => {
-        return record.status.toUpperCase();
+        let tagColor;
+  
+        switch (record.status) {
+          case "approved":
+            tagColor = "success";
+            break;
+          case "pending":
+            tagColor = "processing";
+            break;
+          case "rejected":
+            tagColor = "error";
+            break;
+          case "blocked":
+            tagColor = "error";
+            break;
+          default:
+            tagColor = "default";
+        }
+  
+        return <Tag color={tagColor}>{record.status.toUpperCase()}</Tag>;
       },
     },
     {
