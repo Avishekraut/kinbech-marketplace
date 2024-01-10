@@ -135,7 +135,6 @@ function Products() {
           okText="Yes"
           cancelText="No"
           okType="default"
-          danger
         >
           <RiDeleteBin6Line size={18} />
         </Popconfirm>
