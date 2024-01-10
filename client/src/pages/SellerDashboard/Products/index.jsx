@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Table, Tag, message } from "antd";
+import { Button, Popconfirm, Table, Tag, message } from "antd";
 import ProductsForm from "./ProductsForm";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteProduct, GetProducts } from "../../../apicalls/products";
@@ -129,12 +129,16 @@ function Products() {
                 setShowProductForm(true);
               }}
             />
-            <RiDeleteBin6Line
-              size={18}
-              onClick={() => {
-                deleteProduct(record._id);
-              }}
-            />
+           <Popconfirm
+          title="Are you sure to delete this product?"
+          onConfirm={() => deleteProduct(record._id)}
+          okText="Yes"
+          cancelText="No"
+          okType="default"
+          danger
+        >
+          <RiDeleteBin6Line size={18} />
+        </Popconfirm>
             <LiaCommentsDollarSolid
               size={18}
               onClick={() => {
