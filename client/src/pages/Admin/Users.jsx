@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Table, message } from "antd";
+import { Button, Table, Tag, message } from "antd";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../redux/loadersSlice";
 import moment from "moment";
@@ -66,7 +66,17 @@ function Users() {
       title: "Status",
       dataIndex: "status",
       render: (text, record) => {
-        return record.status.toUpperCase();
+        let tagColor;
+      
+        if (record.status === "active") {
+          tagColor = "success";
+        } else if (record.status === "blocked") {
+          tagColor = "error";
+        } else {
+          tagColor = "default";
+        }
+      
+        return <Tag color={tagColor}>{record.status.toUpperCase()}</Tag>;
       },
     },
     {
