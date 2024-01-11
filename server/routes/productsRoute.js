@@ -1,14 +1,30 @@
 const router = require("express").Router();
 const Product = require("../models/productModel");
+const User = require("../models/userModel");
 const authMiddleware = require("../middlewares/authMiddleware");
 const cloudinary = require("../config/cloudinaryConfig");
 const multer = require("multer");
+const Notification = require("../models/notificationsModel");
 
 //add a new product
 router.post("/add-product", authMiddleware, async (req, res) => {
   try {
     const newProduct = new Product(req.body);
     await newProduct.save();
+    const user = await User.findById(req.body.userId);
+    //send notifications to the admin
+    const admins = await User.find({ role: "admin" });
+    admins.forEach(async (admin) => {
+      const newNotification = new Notification({
+        user: admin._id,
+        title: "New Product Added!",
+        message: `${user.name} added a new product.Take a time to review it`,
+        onClick: `/admin`,
+        read: false,
+      });
+      await newNotification.save();
+    });
+
     res.send({
       success: true,
       message: "Product added successfully",
@@ -144,7 +160,18 @@ router.post(
 router.put("/update-product-status/:id", authMiddleware, async (req, res) => {
   try {
     const { status } = req.body;
-    await Product.findByIdAndUpdate(req.params.id, { status });
+    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, { status });
+    
+    //send notification to the seller
+    const newNotification = new Notification({
+      user: updatedProduct.seller,
+      title: `Product ${status}`,
+      message: `Your product ${updatedProduct.name} has been ${status}`,
+      onClick: `/sellerdashboard`,
+      read: false,
+    })
+    await newNotification.save();
+
     res.send({
       success: true,
       message: " Product status updated successfully",
@@ -161,7 +188,7 @@ router.put("/update-product-status/:id", authMiddleware, async (req, res) => {
 router.post("/update-view-count/:id", authMiddleware, async (req, res) => {
   try {
     const productId = req.params.id;
-    
+
     // Retrieve the current product information from the database
     const product = await Product.findById(productId);
 
