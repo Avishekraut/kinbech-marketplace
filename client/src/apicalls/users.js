@@ -72,3 +72,29 @@ export const verifyOTP = async (payload) => {
     return { success: false, message: error.message };
   }
 };
+
+//update user information
+export const UpdateUser = async (id, name, email) => {
+  try {
+    const response = await axiosInstance.put(
+      `/api/users/update-user/${id}`,
+      { name, email }
+    );
+    return response.data;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+//change password
+export const ChangePassword = async (id, password) => {
+  try {
+    const response = await axiosInstance.put(
+      `/api/users/change-password/${id}`,
+      { password }
+    );
+    return response.data;
+  } catch (error) {
+    return error.message;
+  }
+};
