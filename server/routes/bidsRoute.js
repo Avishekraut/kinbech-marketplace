@@ -35,4 +35,24 @@ router.post("/get-all-bids", authMiddleware, async (req, res) => {
   }
 });
 
+//update Bid status
+router.put("/update-bids-status/:id", authMiddleware, async (req, res) => {
+  try {
+    const { status } = req.body;
+    const updatedProduct = await Bid.findByIdAndUpdate(req.params.id, {
+      status,
+    });
+
+    res.send({
+      success: true,
+      message: " Bid status updated successfully",
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
 module.exports = router;
