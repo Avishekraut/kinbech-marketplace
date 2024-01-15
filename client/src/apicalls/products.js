@@ -117,6 +117,19 @@ export const GetAllBids = async (filters) => {
   }
 };
 
+//update Bid status
+export const UpdateBidStatus = async (id, status) => {
+  try {
+    const response = await axiosInstance.put(
+      `/api/bids/update-bids-status/${id}`,
+      { status }
+    );
+    return response.data;
+  } catch (error) {
+    return error.message;
+  }
+};
+
 //update view count
 export const UpdateViewCount = async (id) => {
   try {
