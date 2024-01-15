@@ -73,11 +73,17 @@ function Products() {
       dataIndex: "category",
     },
     {
+      title: "Added On",
+      dataIndex: "createdAt",
+      render: (text, record) =>
+        moment(record.createdAt).format("DD-MM-YYYY hh:mm A"),
+    },
+    {
       title: "Status",
       dataIndex: "status",
       render: (text, record) => {
         let tagColor;
-  
+
         switch (record.status) {
           case "approved":
             tagColor = "success";
@@ -94,22 +100,9 @@ function Products() {
           default:
             tagColor = "default";
         }
-  
+
         return <Tag color={tagColor}>{record.status.toUpperCase()}</Tag>;
       },
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      render: (text, record) => {
-        return record.status.toUpperCase();
-      },
-    },
-    {
-      title: "Added On",
-      dataIndex: "createdAt",
-      render: (text, record) =>
-        moment(record.createdAt).format("DD-MM-YYYY hh:mm A"),
     },
     {
       title: "Action",
@@ -117,38 +110,39 @@ function Products() {
       render: (text, record) => {
         const { status, _id } = record;
         return (
-          <div className="flex gap-3">
+          <div className="flex gap-3 justify-center">
             {status === "pending" && (
-              <span
-                className="underline cursor-pointer"
+              <Button
+                type="default"
                 onClick={() => onStatusUpdate(_id, "approved")}
               >
                 Approve
-              </span>
+              </Button>
             )}
             {status === "pending" && (
-              <span
-                className="underline cursor-pointer"
-                onClick={() => onStatusUpdate(_id, "rejected")}
-              >
+              <Button danger onClick={() => onStatusUpdate(_id, "rejected")}>
                 Reject
-              </span>
+              </Button>
             )}
             {status === "approved" && (
-              <span
-                className="underline cursor-pointer"
-                onClick={() => onStatusUpdate(_id, "blocked")}
-              >
+              <Button danger onClick={() => onStatusUpdate(_id, "blocked")}>
                 Block
-              </span>
+              </Button>
             )}
             {status === "blocked" && (
-              <span
-                className="underline cursor-pointer"
-                onClick={() => onStatusUpdate(_id, "approved")}
-              >
-                Unblock
-              </span>
+            <Button onClick={() => onStatusUpdate(_id, "approved")}>
+            Unblock
+          </Button>
+            )}
+            {status === "rejected" && (
+              <div className="flex gap-3">
+                <Button type="default" disabled>
+                  Approve
+                </Button>
+                <Button danger disabled>
+                  Reject
+                </Button>
+              </div>
             )}
           </div>
         );
