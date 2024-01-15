@@ -1,8 +1,8 @@
-import { Modal, Table, message } from "antd";
+import { Button, Modal, Table, Tag, message } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../../redux/loadersSlice";
-import { GetAllBids } from "../../../apicalls/products";
+import { GetAllBids, UpdateBidStatus } from "../../../apicalls/products";
 import moment from "moment";
 
 const Bids = ({ showBidsModal, setShowBidsModal, selectedProduct }) => {
@@ -25,13 +25,30 @@ const Bids = ({ showBidsModal, setShowBidsModal, selectedProduct }) => {
     }
   };
 
+  const onStatusUpdate = async (id, status) => {
+    try {
+      dispatch(setLoader(true));
+      const response = await UpdateBidStatus(id, status);
+      dispatch(setLoader(false));
+      if (response.success) {
+        message.success(response.message);
+        getData();
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      dispatch(setLoader(false));
+      message.error(error.message);
+    }
+  };
+
   const columns = [
     {
       title: "Name",
       dataIndex: "name",
       render: (text, record) => {
         return record.buyer.name;
-      }
+      },
     },
     {
       title: "Bid Amount",
@@ -56,6 +73,73 @@ const Bids = ({ showBidsModal, setShowBidsModal, selectedProduct }) => {
           <div>
             <p>Phone: {record.mobile}</p>
             <p>Email: {record.buyer.email}</p>
+          </div>
+        );
+      },
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      render: (text, record) => {
+        let tagColor;
+
+        switch (record.status) {
+          case "accepted":
+            tagColor = "success";
+            break;
+          case "pending":
+            tagColor = "processing";
+            break;
+          case "rejected":
+            tagColor = "error";
+            break;
+          default:
+            tagColor = "default";
+        }
+
+        return <Tag color={tagColor}>{record.status.toUpperCase()}</Tag>;
+      },
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      render: (text, record) => {
+        const { status, _id } = record;
+        return (
+          <div className="flex gap-3">
+            {status === "pending" && (
+              <Button
+                type="default"
+                onClick={() => onStatusUpdate(_id, "accepted")}
+              >
+                Accept
+              </Button>
+            )}
+            {status === "pending" && (
+              <Button danger onClick={() => onStatusUpdate(_id, "rejected")}>
+                Reject
+              </Button>
+            )}
+            {status === "accepted" && (
+              <div className="flex gap-3">
+                <Button type="default" disabled>
+                  Accept
+                </Button>
+                <Button danger disabled>
+                  Reject
+                </Button>
+              </div>
+            )}
+            {status === "rejected" && (
+              <div className="flex gap-3">
+                <Button type="default" disabled>
+                  Accept
+                </Button>
+                <Button danger disabled>
+                  Reject
+                </Button>
+              </div>
+            )}
           </div>
         );
       },
