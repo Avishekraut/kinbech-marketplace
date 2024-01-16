@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, message } from "antd";
+import { Alert, Button, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaRegEye } from "react-icons/fa";
@@ -42,16 +42,20 @@ const ProductInfo = () => {
     }
   };
 
+  const isBidAccepted = () => {
+    return product.bids.some((bid) => bid.status === "accepted");
+  };
+
   useEffect(() => {
     getData();
 
     // Call the UpdateViewCount function when the component mounts
     UpdateViewCount(id)
-      .then(updatedViewCount => {
+      .then((updatedViewCount) => {
         // Set the view count in the component state
         setViewCount(updatedViewCount);
       })
-      .catch(error => {
+      .catch((error) => {
         message(error.message);
       });
   }, []);
@@ -82,7 +86,10 @@ const ProductInfo = () => {
                 );
               })}
             </div>
-            <span className="flex gap-2 items-center"><FaRegEye size={18}/>{viewCount} Views</span>
+            <span className="flex gap-2 items-center">
+              <FaRegEye size={18} />
+              {viewCount} Views
+            </span>
           </div>
 
           {/* Product Details */}
@@ -137,11 +144,14 @@ const ProductInfo = () => {
                 <h1 className="text-xl font-semibold">Bids</h1>
                 <Button
                   onClick={() => setShowAddNewBid(!showAddNewBid)}
-                  disabled={user._id === product.seller._id}
+                  disabled={user._id === product.seller._id || isBidAccepted()}
                 >
-                  New Bid
+                  Place a Bid
                 </Button>
               </div>
+              {isBidAccepted() && (
+                <Alert message="This item has been sold. Bids are no longer accepted." banner className="mt-3 rounded-md"/>
+              )}
               {product.ShowProductBids &&
                 product.bids?.map((bid) => {
                   return (
