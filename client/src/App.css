@@ -23,9 +23,6 @@ section {
   background: #ebeeef;
   justify-content: space-between;
 }
-.links{
-  display: flex;
-}
 .contact{
   padding: 8px 0;
 }
@@ -33,10 +30,6 @@ section {
   font-size: 18px;
   font-weight: 600;
 }
-.company{
-  padding: 8px 0;
-}
-
 .social{
   margin: 8px 0;
   margin-right: 14px;
