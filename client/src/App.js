@@ -13,6 +13,9 @@ import Home from "./pages/Home/Home";
 import ForgotPassword from "./pages/ForgotPassword";
 import OTPVerification from "./pages/OTPVerification";
 import Myprofile from "./pages/Myprofile";
+import AboutUs from "./pages/AboutUs";
+import ContactUs from "./pages/ContactUs";
+
 
 const App = () => {
   const { loading } = useSelector((state) => state.loaders);
@@ -67,6 +70,8 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/otpverification" element={<OTPVerification />} />
+          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/contactus" element={<ContactUs />} />
         </Routes>
       </section>
       <Footer />
