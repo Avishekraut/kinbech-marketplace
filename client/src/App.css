@@ -14,32 +14,6 @@ section {
   margin: 0 128px;
 }
 
-/* Hero Section CSS */
-.hero-img {
-  display: flex;
-  justify-content: center;
-}
-.hero-img img {
-  width: 100%;
-}
-
-/* Categories Section CSS */
-.carousel {
-  margin: 50px 0;
-}
-.carousel-card {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
-}
-.carousel-card img {
-  width: 100px;
-  height: 100px;
-}
-
-
 /* Footer Container CSS */
 .footer-conatiner {
   display: flex;
@@ -47,11 +21,10 @@ section {
   margin-top: 60px;
   padding: 60px 128px;
   background: #ebeeef;
-  gap: 200px;
+  justify-content: space-between;
 }
 .links{
   display: flex;
-  gap: 94px;
 }
 .contact{
   padding: 8px 0;
@@ -82,6 +55,9 @@ section {
   flex-direction: column;
   gap: 8px;
   margin-top: 2px;
+}
+.icons{
+  display: flex;
 }
 
 
