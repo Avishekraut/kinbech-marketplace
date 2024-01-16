@@ -4,12 +4,13 @@ import qrcode from "../images/qrcode.png";
 import playstore from "../images/googleplay-logo.png";
 import appstore from "../images/appstore-logo.png";
 import Kinbechlogo from "../../src/images/kinbechLogo.png";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
     <div className="footer-conatiner">
       <div className="contact-section">
-        <img src={Kinbechlogo} alt="kinbech logo" className="h-10"/>
+        <img src={Kinbechlogo} alt="kinbech logo" className="h-10" />
         <p className="contact contact-text">Got Question? Call us on</p>
         <p className="contact contact-number">+977-9841446187</p>
         <p className="contact contact-email">info@kinbech.com</p>
@@ -18,19 +19,23 @@ const Footer = () => {
 
       <div className="company-section">
         <h2 className="font-medium">Company</h2>
-        <p className="company">About Us</p>
-        <p className="company">Contact Us</p>
-        <p className="company">Advertise With Us</p>
+        <div className="flex flex-col gap-4 mt-2">
+          <Link to="/aboutus">About Us</Link>
+          <Link to="/contactus">Contact Us</Link>
+          <p>Advertise With Us</p>
+        </div>
       </div>
       <div className="categories-section">
-          <h2 className="font-medium">Category</h2>
-          <p className="company ">Mobile Phone</p>
-          <p className="company ">Laptop</p>
-          <p className="company ">Motorcyle</p>
-          <p className="company ">Car</p>
-          <p className="company ">Gaming</p>
-          <p className="company ">Home Appliance</p>
+        <h2 className="font-medium">Category</h2>
+        <div className=" flex flex-col gap-4 mt-2">
+          <p>Mobile Phone</p>
+          <p>Laptop</p>
+          <p>Motorcyle</p>
+          <p>Car</p>
+          <p>Gaming</p>
+          <p>Home Appliance</p>
         </div>
+      </div>
       <div className="categories-section">
         <h2 className="font-medium">Follow Us</h2>
         <div className="icons">
