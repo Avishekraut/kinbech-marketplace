@@ -87,20 +87,14 @@ function Users() {
         return (
           <div className="flex gap-3">
             {status === "active" && (
-              <span
-                className="underline cursor-pointer"
-                onClick={() => onStatusUpdate(_id, "blocked")}
-              >
-                Block
-              </span>
+              <Button danger onClick={() => onStatusUpdate(_id, "blocked")}>
+              Block
+            </Button>
             )}
             {status === "blocked" && (
-              <span
-                className="underline cursor-pointer"
-                onClick={() => onStatusUpdate(_id, "active")}
-              >
-                Unblock
-              </span>
+              <Button danger onClick={() => onStatusUpdate(_id, "active")}>
+              Unblock
+            </Button>
             )}
           </div>
         );
