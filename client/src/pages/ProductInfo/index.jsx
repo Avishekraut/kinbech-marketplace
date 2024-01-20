@@ -140,7 +140,7 @@ const ProductInfo = () => {
             <Divider />
 
             <div className="flex flex-col">
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <h1 className="text-xl font-semibold">Bids</h1>
                 <Button
                   onClick={() => setShowAddNewBid(!showAddNewBid)}
