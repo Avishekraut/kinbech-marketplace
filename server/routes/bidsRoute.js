@@ -16,7 +16,7 @@ router.post("/place-new-bid", authMiddleware, async (req, res) => {
 //get all bids
 router.post("/get-all-bids", authMiddleware, async (req, res) => {
   try {
-    const { product, seller } = req.body;
+    const { product, seller, buyer } = req.body;
     let filters = {};
     if (product) {
       filters.product = product;
@@ -25,6 +25,9 @@ router.post("/get-all-bids", authMiddleware, async (req, res) => {
       filters.seller = seller;
     }
 
+    if(buyer){
+      filters.buyer = buyer;
+    }
     const bids = await Bid.find(filters)
       .populate("product")
       .populate("buyer")
@@ -47,6 +50,22 @@ router.put("/update-bids-status/:id", authMiddleware, async (req, res) => {
     res.send({
       success: true,
       message: " Bid status updated successfully",
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+//delete a bid
+router.delete("/delete-bid/:id", authMiddleware, async (req, res) => {
+  try {
+    await Bid.findByIdAndDelete(req.params.id);
+    res.send({
+      success: true,
+      message: "Bid deleted successfully",
     });
   } catch (error) {
     res.send({

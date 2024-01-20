@@ -147,3 +147,15 @@ export const UpdateViewCount = async (id) => {
     return error.message;
   }
 };
+
+//delete a bid
+export const DeleteBid = async (id) => {
+  try {
+    const response = await axiosInstance.delete(
+      `/api/bids/delete-bid/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
