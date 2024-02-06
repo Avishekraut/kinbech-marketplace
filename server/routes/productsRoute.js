@@ -40,26 +40,34 @@ router.post("/add-product", authMiddleware, async (req, res) => {
 //get all products
 router.post("/get-products", async (req, res) => {
   try {
-    const { seller, category = [], condition = [], status } = req.body;
+    const { seller, category = [], condition = [], status, search } = req.body;
     let filters = {};
+
     if (seller) {
       filters.seller = seller;
     }
     if (status) {
       filters.status = status;
     }
-    //filter by category
+    // filter by category
     if (category.length > 0) {
       filters.category = { $in: category };
     }
-    //filter by condition
+    // filter by condition
     if (condition.length > 0) {
       filters.condition = { $in: condition };
+    }
+    // search by name
+    if (search) {
+      filters.$or = [
+        { name: { $regex: search, $options: "i" } },
+      ];
     }
 
     const products = await Product.find(filters)
       .populate("seller")
       .sort({ createdAt: -1 });
+
     res.send({
       success: true,
       data: products,
@@ -71,6 +79,7 @@ router.post("/get-products", async (req, res) => {
     });
   }
 });
+
 
 //get product by id
 router.get("/get-product-by-id/:id", async (req, res) => {
