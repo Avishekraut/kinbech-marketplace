@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
 import "../../App.css";
-// import Hero from "../../components/Hero";
 import { GetProducts } from "../../apicalls/products";
-import { message } from "antd";
+import { message, Input } from "antd";
 import { setLoader } from "../../redux/loadersSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Filters from "./Filters";
-import { IoFilter } from "react-icons/io5";
+import { IoSearch, IoClose, IoFilter } from "react-icons/io5";
 
 const Home = () => {
   const [showFilters, setShowFilters] = React.useState(true);
+  const [searchQuery, setSearchQuery] = React.useState("");
   const [products, setProducts] = React.useState([]);
   const [filters, setFilters] = React.useState({
     status: "approved",
@@ -23,10 +23,10 @@ const Home = () => {
   const getData = async () => {
     try {
       dispatch(setLoader(true));
-      const respone = await GetProducts(filters);
+      const response = await GetProducts({ ...filters, search: searchQuery });
       dispatch(setLoader(false));
-      if (respone.success) {
-        setProducts(respone.data);
+      if (response.success) {
+        setProducts(response.data);
       }
     } catch (error) {
       dispatch(setLoader(false));
@@ -34,14 +34,16 @@ const Home = () => {
     }
   };
 
+  const handleSearch = () => {
+    getData();
+  };
+
   useEffect(() => {
     getData();
-  }, [filters]);
+  }, [filters, searchQuery]);
 
   return (
     <div>
-      {/* <Hero /> */}
-      {/* <h1 className="my-6 font-semibold text-lg">Featured Ads</h1> */}
       <div className="flex gap-4">
         {showFilters && (
           <Filters
@@ -52,18 +54,25 @@ const Home = () => {
           />
         )}
         <div className="flex flex-col gap-5 w-full">
-          <div className="flex gap-5 items-center">
+          <div className="flex items-center">
             {!showFilters && (
               <IoFilter
                 size={24}
-                className="cursor-pointer"
+                className="cursor-pointer mr-5"
                 onClick={() => setShowFilters(!showFilters)}
               />
             )}
             <input
               type="text"
               placeholder="Search Products here"
-              className="border border-gray-300 rounded border-solid w-full p-2"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="border border-gray-300 rounded border-solid w-full p-2 focus:outline-none focus:ring focus:ring-gray-100"
+            />
+            <IoSearch
+              size={22}
+              className="cursor-pointer border border-gray-300 rounded border-solid p-2 h-[42px] w-14 bg-[#14ae5c] text-white ml-2"
+              onClick={handleSearch}
             />
           </div>
           <div
