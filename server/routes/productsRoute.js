@@ -59,9 +59,7 @@ router.post("/get-products", async (req, res) => {
     }
     // search by name
     if (search) {
-      filters.$or = [
-        { name: { $regex: search, $options: "i" } },
-      ];
+      filters.$or = [{ name: { $regex: search, $options: "i" } }];
     }
 
     const products = await Product.find(filters)
@@ -79,7 +77,6 @@ router.post("/get-products", async (req, res) => {
     });
   }
 });
-
 
 //get product by id
 router.get("/get-product-by-id/:id", async (req, res) => {
@@ -128,14 +125,12 @@ router.delete("/delete-product/:id", authMiddleware, async (req, res) => {
     });
   }
 });
-
 //get image from user
 const storage = multer.diskStorage({
   filename: function (req, file, callback) {
     callback(null, Date.now() + file.originalname);
   },
 });
-
 router.post(
   "/upload-image-to-product",
   authMiddleware,
@@ -169,8 +164,10 @@ router.post(
 router.put("/update-product-status/:id", authMiddleware, async (req, res) => {
   try {
     const { status } = req.body;
-    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, { status });
-    
+    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, {
+      status,
+    });
+
     //send notification to the seller
     const newNotification = new Notification({
       user: updatedProduct.seller,
@@ -178,7 +175,7 @@ router.put("/update-product-status/:id", authMiddleware, async (req, res) => {
       message: `Your product ${updatedProduct.name} has been ${status}`,
       onClick: `/sellerdashboard`,
       read: false,
-    })
+    });
     await newNotification.save();
 
     res.send({
