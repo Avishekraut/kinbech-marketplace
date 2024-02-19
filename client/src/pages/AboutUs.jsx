@@ -24,7 +24,7 @@ const AboutUs = () => {
             got, we promise to get it done.
           </p>
         </div>
-        <div className="w-1/2 flex justify-center">
+        <div className="w-1/2 flex justify-end">
           <img
             src={aboutimg}
             alt="About us image"
@@ -36,7 +36,9 @@ const AboutUs = () => {
         <h1 className="font-bold mb-3 text-xl">
           Frequently Asked Questions (FAQs)
         </h1>
-        <h1 className="font-semibold">What Benefits do I get as a member?</h1>
+        <h1 className="font-semibold">
+          1. What Benefits do I get as a member?
+        </h1>
         <div className="mt-2">
           <li>24/7 market place for your products and services.</li>
           <li>
@@ -65,12 +67,46 @@ const AboutUs = () => {
             before finalizing a deal.
           </li>
         </div>
-        <h1 className="font-semibold"> How can I register in the site?</h1>
-        <div className="mt-2">
-          If you want to promote your product/service then you just have to
-          register as member at hamrobazar first. Just click on Register link at
-          top of the website to get started. Fill in your contact details
-          mentioned in online registration form and submit.
+        <h1 className="font-semibold mt-3">
+          2. How can I register in the site?
+        </h1>
+        <div className="mt-2 w-3/4 text-justify">
+          If you want to promote and sell your product then you just have to
+          register as member at Kinbech first. Just click on Signup at top of
+          the website to get started. Fill in your contact details mentioned in
+          online registration form and submit.
+        </div>
+        <h1 className="font-semibold mt-3">
+          {" "}
+          3. How do I post an ad for my product or services in the site?
+        </h1>
+        <div className="mt-2 w-3/4 text-justify">
+          Once you have registered an account, then you just have to login to
+          the site. Once logged in, go to 'My Listings Page' button in Menu.Then
+          click Add Product button which opens Product form. Then fill up the
+          form with description, price of your product and other required fields
+          and click on save button.
+        </div>
+        <h1 className="font-semibold mt-3">
+          {" "}
+         4. Can I change the details of product later?
+        </h1>
+        <div className="mt-2 w-3/4 text-justify">
+          Yes. You can change the details of your products later whenever you
+          require it. Just login to your account and click on 'My Listings'
+          option from the menu. You will see list of all the ads you have posted
+          in the site. From there you can edit your ad, change/upload your
+          product picture or delete.
+        </div>
+        <h1 className="font-semibold mt-3">
+          {" "}
+          5. Can I change my personal information and password later?
+        </h1>
+        <div className="mt-2 w-3/4 text-justify">
+          Yes. You can change your personal information whenever you want. You
+          need to login to your account and click on 'My Profile' which is
+          revaled after hovering in your name.Now you can update your profile
+          details and password.
         </div>
       </div>
     </div>
