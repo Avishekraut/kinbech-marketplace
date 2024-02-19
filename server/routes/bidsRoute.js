@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const Bid = require("../models/bidModel");
 const authMiddleware = require("../middlewares/authMiddleware");
+const Notification = require("../models/notificationsModel");
+const Product = require("../models/productModel");
 
 //place a new Bid
 router.post("/place-new-bid", authMiddleware, async (req, res) => {
@@ -25,7 +27,7 @@ router.post("/get-all-bids", authMiddleware, async (req, res) => {
       filters.seller = seller;
     }
 
-    if(buyer){
+    if (buyer) {
       filters.buyer = buyer;
     }
     const bids = await Bid.find(filters)
@@ -46,6 +48,23 @@ router.put("/update-bids-status/:id", authMiddleware, async (req, res) => {
     const updatedProduct = await Bid.findByIdAndUpdate(req.params.id, {
       status,
     });
+    const product = await Product.findById(updatedProduct.product);
+    // Determine the message 
+    let customMessage;
+    if (status === "accepted") {
+      customMessage = `Congratulations! Your bid for ${product.name} has been ${status}`;
+    } else {
+      customMessage = `Your bid for ${product.name} has been ${status}`;
+    }
+    //send notification to the buyer
+    const newNotification = new Notification({
+      user: updatedProduct.buyer,
+      title: `Bid ${status}`,
+      message: `${customMessage}`,
+      onClick: `/sellerdashboard`,
+      read: false,
+    });
+    await newNotification.save();
 
     res.send({
       success: true,
