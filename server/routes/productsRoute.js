@@ -40,7 +40,15 @@ router.post("/add-product", authMiddleware, async (req, res) => {
 //get all products
 router.post("/get-products", async (req, res) => {
   try {
-    const { seller, category = [], condition = [], status, search } = req.body;
+    const {
+      seller,
+      category = [],
+      condition = [],
+      minPrice,
+      maxPrice,
+      status,
+      search,
+    } = req.body;
     let filters = {};
 
     if (seller) {
@@ -56,6 +64,16 @@ router.post("/get-products", async (req, res) => {
     // filter by condition
     if (condition.length > 0) {
       filters.condition = { $in: condition };
+    }
+    //filter by price
+    if (minPrice !== undefined || maxPrice !== undefined) {
+      filters.price = {};
+      if (minPrice !== undefined) {
+        filters.price.$gte = minPrice;
+      }
+      if (maxPrice !== undefined) {
+        filters.price.$lte = maxPrice;
+      }
     }
     // search by name
     if (search) {
