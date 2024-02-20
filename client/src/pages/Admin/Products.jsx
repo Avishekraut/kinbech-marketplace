@@ -4,9 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetProducts, UpdateProductStatus } from "../../apicalls/products";
 import { setLoader } from "../../redux/loadersSlice";
 import moment from "moment";
+import ProductInfo from "./ProductInfo";
 
 function Products() {
   const [products, setProducts] = React.useState([]);
+  const [showProductInfo, setshowProductInfo] = React.useState(false);
+  const [productInfoId, setProductInfoId] = React.useState(null);
   const dispatch = useDispatch();
   const getData = async () => {
     try {
@@ -48,7 +51,11 @@ function Products() {
           <img
             src={record?.images?.length > 0 ? record.images[0] : ""}
             alt="Product Image"
-            className="w-20 h-20 object-cover rounded-md"
+            className="w-20 h-20 object-cover rounded-md cursor-pointer"
+            onClick={() => {
+              setshowProductInfo(true);
+              setProductInfoId(record._id);
+            }}
           />
         );
       },
@@ -130,9 +137,9 @@ function Products() {
               </Button>
             )}
             {status === "blocked" && (
-            <Button onClick={() => onStatusUpdate(_id, "approved")}>
-            Unblock
-          </Button>
+              <Button onClick={() => onStatusUpdate(_id, "approved")}>
+                Unblock
+              </Button>
             )}
             {status === "rejected" && (
               <div className="flex gap-3">
@@ -157,6 +164,15 @@ function Products() {
   return (
     <div>
       <Table className="mt-4" columns={columns} dataSource={products} />
+
+      {/* more product info */}
+      {showProductInfo && (
+        <ProductInfo
+          showProductInfo={showProductInfo}
+          setshowProductInfo={setshowProductInfo}
+          id={productInfoId}
+        />
+      )}
     </div>
   );
 }
