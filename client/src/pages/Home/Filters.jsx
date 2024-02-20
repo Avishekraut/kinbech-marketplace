@@ -51,6 +51,14 @@ const condition = [
   },
 ];
 const Filters = ({ showFilters, setShowFilters, filters, setFilters }) => {
+  const handlePriceChange = (e, type) => {
+    const value = parseInt(e.target.value);
+    setFilters({
+      ...filters,
+      [type]: value >= 0 ? value : undefined,
+    });
+  };
+
   return (
     <div className="flex flex-col w-72">
       <div className="flex justify-between items-center">
@@ -123,6 +131,28 @@ const Filters = ({ showFilters, setShowFilters, filters, setFilters }) => {
               </div>
             );
           })}
+        </div>
+
+        {/* Price range */}
+        <div className="mt-5">
+          <h1 className="font-semibold">Price Range</h1>
+          <div className="flex gap-2 mt-2 items-center">
+            <input
+              type="number"
+              placeholder="Min"
+              value={filters.minPrice || ""}
+              onChange={(e) => handlePriceChange(e, "minPrice")}
+              className="border rounded-md p-1 w-full focus:outline-none focus:ring focus:ring-gray-100"
+            />
+            <h1>To</h1>
+            <input
+              type="number"
+              placeholder=" Max"
+              value={filters.maxPrice || ""}
+              onChange={(e) => handlePriceChange(e, "maxPrice")}
+              className="border rounded-md p-1 w-full focus:outline-none focus:ring focus:ring-gray-100"
+            />
+          </div>
         </div>
       </div>
     </div>
