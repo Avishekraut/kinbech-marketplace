@@ -1,11 +1,17 @@
-import { Button, Form, Input, Modal, message } from "antd";
+import { Button, Form, Input, InputNumber, Modal, message } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../redux/loadersSlice";
 import { PlaceNewBid } from "../../apicalls/products";
 import { AddNotification } from "../../apicalls/notifications";
 
-const BidModal = ({ showBidModal, setShowBidModal, product, reloadData }) => {
+const BidModal = ({
+  showBidModal,
+  setShowBidModal,
+  product,
+  reloadData,
+  price,
+}) => {
   const { user } = useSelector((state) => state.users);
   const formRef = React.useRef(null);
   const rules = [{ required: true, message: "Required" }];
@@ -60,8 +66,13 @@ const BidModal = ({ showBidModal, setShowBidModal, product, reloadData }) => {
       <div className="flex flex-col gap-5">
         <h1 className="text-xl font-semibold text-center">New Bid</h1>
         <Form layout="vertical" ref={formRef} onFinish={onFinish}>
-          <Form.Item label="Bid Amount" name="bidAmount" rules={rules}>
-            <Input type="number" />
+          <Form.Item label="Bid Amount" name="bidAmount" rules={rules}  extra={`Minimum bid amount: ${price * 0.9}, Maximum bid amount: ${price * 1.1}`}>
+            <InputNumber
+              type="number"
+              min={price * 0.9}
+              max={price * 1.1}
+              className="w-full"
+            />
           </Form.Item>
           <Form.Item label="Mobile Number" name="mobile" rules={rules}>
             <Input type="number" />

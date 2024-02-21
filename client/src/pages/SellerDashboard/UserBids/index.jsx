@@ -1,12 +1,10 @@
-import { Table, Tag, message } from "antd";
+import { Popconfirm, Table, Tag, message } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../../redux/loadersSlice";
 import moment from "moment";
 import { GetAllBids, DeleteBid } from "../../../apicalls/products";
 import { RiDeleteBin6Line } from "react-icons/ri";
-
-
 const UserBids = () => {
   const [bidsData, setBidsData] = React.useState([]);
   const dispatch = useDispatch();
@@ -104,16 +102,19 @@ const UserBids = () => {
       render: (text, record) => {
         return (
           <div className="flex justify-center">
-            <RiDeleteBin6Line
-                  onClick={() => {
-                    deleteBid(record._id);
-                  }}
-                  className="cursor-pointer text-red-500"
-                />
+            <Popconfirm
+              title="Are you sure to block this product?"
+              onConfirm={() => deleteBid(record._id)}
+              okText="Yes"
+              cancelText="No"
+              okType="default"
+            >
+              <RiDeleteBin6Line className="cursor-pointer text-red-500" />
+            </Popconfirm>
           </div>
-        )
-      }
-    },      
+        );
+      },
+    },
   ];
 
   useEffect(() => {

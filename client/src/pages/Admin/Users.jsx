@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Table, Tag, message } from "antd";
+import { Button, Popconfirm, Table, Tag, message } from "antd";
 import { useDispatch } from "react-redux";
 import { setLoader } from "../../redux/loadersSlice";
 import moment from "moment";
@@ -67,7 +67,7 @@ function Users() {
       dataIndex: "status",
       render: (text, record) => {
         let tagColor;
-      
+
         if (record.status === "active") {
           tagColor = "success";
         } else if (record.status === "blocked") {
@@ -75,7 +75,7 @@ function Users() {
         } else {
           tagColor = "default";
         }
-      
+
         return <Tag color={tagColor}>{record.status.toUpperCase()}</Tag>;
       },
     },
@@ -87,14 +87,20 @@ function Users() {
         return (
           <div className="flex gap-3">
             {status === "active" && (
-              <Button danger onClick={() => onStatusUpdate(_id, "blocked")}>
-              Block
-            </Button>
+              <Popconfirm
+                title="Are you sure to block this product?"
+                onConfirm={() => onStatusUpdate(_id, "blocked")}
+                okText="Yes"
+                cancelText="No"
+                okType="default"
+              >
+                <Button danger>Block</Button>
+              </Popconfirm>
             )}
             {status === "blocked" && (
               <Button danger onClick={() => onStatusUpdate(_id, "active")}>
-              Unblock
-            </Button>
+                Unblock
+              </Button>
             )}
           </div>
         );

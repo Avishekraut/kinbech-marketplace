@@ -183,6 +183,7 @@ const ProductInfo = () => {
             reloadData={getData}
             showBidModal={showAddNewBid}
             setShowBidModal={setShowAddNewBid}
+            price={product.price}
           />
         )}
       </div>

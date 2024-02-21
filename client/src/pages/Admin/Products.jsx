@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Table, Tag, message } from "antd";
+import { Button, Popconfirm, Table, Tag, message } from "antd";
 import { useDispatch } from "react-redux";
 import { GetProducts, UpdateProductStatus } from "../../apicalls/products";
 import { setLoader } from "../../redux/loadersSlice";
@@ -88,7 +88,7 @@ function Products() {
     {
       title: "Status",
       dataIndex: "status",
-      
+
       render: (text, record) => {
         let tagColor;
 
@@ -133,9 +133,15 @@ function Products() {
               </Button>
             )}
             {status === "approved" && (
-              <Button danger onClick={() => onStatusUpdate(_id, "blocked")}>
-                Block
-              </Button>
+              <Popconfirm
+                title="Are you sure to block this product?"
+                onConfirm={() => onStatusUpdate(_id, "blocked")}
+                okText="Yes"
+                cancelText="No"
+                okType="default"
+              >
+                <Button danger>Block</Button>
+              </Popconfirm>
             )}
             {status === "blocked" && (
               <Button onClick={() => onStatusUpdate(_id, "approved")}>
