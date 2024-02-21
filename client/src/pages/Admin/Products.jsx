@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Table, Tag, message } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { GetProducts, UpdateProductStatus } from "../../apicalls/products";
 import { setLoader } from "../../redux/loadersSlice";
 import moment from "moment";
@@ -88,6 +88,7 @@ function Products() {
     {
       title: "Status",
       dataIndex: "status",
+      
       render: (text, record) => {
         let tagColor;
 
