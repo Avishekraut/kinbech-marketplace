@@ -13,6 +13,8 @@ convenient platform that connects buyers and sellers, enabling them to trade a v
 - Notifications
 
 # Technologies Used 💻
-**Client:** React, Redux, TailwindCSS, 
+**Client:** React, Redux, TailwindCSS, Ant Design
+
 **Server:** Node, Express
+
 **Database:** MongoDB
