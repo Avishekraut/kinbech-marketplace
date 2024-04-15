@@ -103,7 +103,7 @@ const UserBids = () => {
         return (
           <div className="flex justify-center">
             <Popconfirm
-              title="Are you sure to block this product?"
+              title="Are you sure to delete this bid?"
               onConfirm={() => deleteBid(record._id)}
               okText="Yes"
               cancelText="No"

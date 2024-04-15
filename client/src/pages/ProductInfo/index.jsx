@@ -131,10 +131,6 @@ const ProductInfo = () => {
                 <span>Name</span>
                 <span>{product.seller.name}</span>
               </div>
-              <div className="flex justify-between mt-2">
-                <span>Email</span>
-                <span>{product.seller.email}</span>
-              </div>
             </div>
 
             <Divider />

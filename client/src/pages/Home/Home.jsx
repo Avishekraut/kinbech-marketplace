@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "../../App.css";
 import { GetProducts } from "../../apicalls/products";
-import { message, Input } from "antd";
+import { message } from "antd";
 import { setLoader } from "../../redux/loadersSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +19,7 @@ const Home = () => {
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  let timer;
 
   const getData = async () => {
     try {
@@ -34,12 +35,21 @@ const Home = () => {
     }
   };
 
-  const handleSearch = () => {
-    getData();
+  const handleSearch = (value) => {
+    setSearchQuery(value);
   };
 
   useEffect(() => {
-    getData();
+    if (searchQuery === "") {
+      getData();
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      getData();
+    }, 400);
+
+    return () => clearTimeout(timer);
   }, [filters, searchQuery]);
 
   return (

@@ -88,7 +88,7 @@ function Users() {
           <div className="flex gap-3">
             {status === "active" && (
               <Popconfirm
-                title="Are you sure to block this product?"
+                title="Are you sure to block this user?"
                 onConfirm={() => onStatusUpdate(_id, "blocked")}
                 okText="Yes"
                 cancelText="No"
